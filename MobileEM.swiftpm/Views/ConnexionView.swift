@@ -7,22 +7,12 @@
 
 import SwiftUI
 
-/*
- struct SwiftUIView: View {
- var body: some View {
- Text("Connexion")
- }
- }
- 
- struct SwiftUIView_Previews: PreviewProvider {
- static var previews: some View {
- SwiftUIView()
- }
- }
- */
 struct LoginView: View {
     @State private var username: String = ""
     @State private var password: String = ""
+    @State private var errorMessage: String?
+    @ObservedObject private var viewModel = LoginViewModel()
+
     
     var body: some View {
         VStack {
@@ -74,10 +64,12 @@ struct LoginView: View {
     }
     
     func login() {
-        // Logique de connexion ici
-        print("Nom d'utilisateur: \(username), Mot de passe: \(password)")
-        
         // logique de connexion ici, par exemple en appelant une API
+        // Validation des champs
+        guard !username.isEmpty && !password.isEmpty else {
+            errorMessage = "Veuillez remplir tous les champs"
+            return
+        }
     }
 }
 
