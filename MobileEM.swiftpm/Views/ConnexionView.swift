@@ -12,9 +12,11 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var errorMessage: String?
     @ObservedObject private var viewModel = LoginViewModel()
+    @State private var isShowingInscriptionView = false //State pour gérer la navigation
 
     
     var body: some View {
+        NavigationView {
         VStack {
             
             Image("Logo")
@@ -47,20 +49,24 @@ struct LoginView: View {
             }
             
             Button(action: {
-                // Action à exécuter lorsque le bouton est appuyé
-                self.login()
+                self.isShowingInscriptionView = true //Navigation vers InscriptionView
             }) {
                 Text("S'inscrire")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                }
             .padding()
             
             Spacer()
         }
+        }
         .padding()
+        .navigationBarHidden(true) // Masquer la barre de navigation de cette vue
+        .sheet(isPresented: $isShowingInscriptionView) {
+            InscriptionView() // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
+        }
     }
     
     func login() {
@@ -72,6 +78,7 @@ struct LoginView: View {
         }
     }
 }
+
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
