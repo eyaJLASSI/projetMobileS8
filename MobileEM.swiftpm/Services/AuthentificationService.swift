@@ -31,15 +31,21 @@ class AuthentificationService
     // Login
     func login(pseudo: String, password: String) async -> Result<AuthDTO?, Error>
     {
+        
+        // Concatener l'host avec l'uri
         guard let loginUrl = URL(string: "\(self.api)\(self.loginApi)")
         else
         {
             return .failure(AuthErrors.unknown)
         }
         
-        var request = GetPostRequest(url : loginUrl)
+        // Creer une requête Post
+        var request = URLRequest(url: loginUrl)
+        request.httpMethod = "Post"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // On va creer un DTO de login, pour pouvoir le transformer en JSON et l'utiliser dans la requête post
+        // L'object LoginDto hérite de Encodable, c'est pour ça que je peux l'utiliser avec cette methode
         let loginDto : LoginDto = LoginDto(username: pseudo, password: password)
         guard let json : Data = await JSONHelper.encode(data: loginDto)
         else
@@ -49,6 +55,7 @@ class AuthentificationService
         
         do
         {
+            // Envoyer la requete, avec en content le json encodé
             let (data, response) = try await URLSession.shared.upload(for: request, from: json)
             let httpresponse = response as! HTTPURLResponse // le bon type
 
@@ -71,14 +78,5 @@ class AuthentificationService
         {
             return .failure(AuthErrors.failedUpload)
         }
-    }
-    
-    func GetPostRequest(url : URL) -> URLRequest
-    {
-        var request = URLRequest(url: url)
-        request.httpMethod = "Post"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        return request
     }
 }

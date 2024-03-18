@@ -9,11 +9,11 @@ import Foundation
 
 class LoginDto : Encodable
 {
-    var username: String
+    var pseudo  : String
     var password: String
     
     init(username: String, password: String) {
-        self.username = username
+        self.pseudo   = username
         self.password = password
     }
 }
