@@ -7,7 +7,8 @@
 
 import Foundation
 
-class Login {
+class LoginDto : Encodable
+{
     var username: String
     var password: String
     
