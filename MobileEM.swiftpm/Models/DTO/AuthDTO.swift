@@ -10,5 +10,5 @@ import Foundation
 
 class AuthDTO : Decodable
 {
-    var token : String
+    public var token : String
 }

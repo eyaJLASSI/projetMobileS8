@@ -29,7 +29,7 @@ class AuthentificationService
     }
     
     // Login
-    func login(pseudo: String, password: String) async -> Result<AuthDTO?, Error>
+    public func login(pseudo: String, password: String) async -> Result<AuthDTO, Error>
     {
         
         // Concatener l'host avec l'uri

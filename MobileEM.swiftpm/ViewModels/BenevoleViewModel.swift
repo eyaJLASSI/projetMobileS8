@@ -81,6 +81,8 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         }
     }
     
+    @Published var authFailedMessage : String = ""
+    
     init(BenevoleDTO : BenevoleDTO){
         self.pseudo = BenevoleDTO.pseudo
         self.nom = BenevoleDTO.nom
@@ -91,7 +93,6 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         self.chercheLogement = BenevoleDTO.chercheLogement
         self.taille = BenevoleDTO.taille
         self.vegetarien = BenevoleDTO.vegetarien
-        
     }
     
     init(){
@@ -104,8 +105,19 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         self.chercheLogement=false
         self.taille=""
         self.vegetarien=false
-
-
+    }
+    
+    func initialiser(benevoleDTO: BenevoleDTO)
+    {
+        self.pseudo = benevoleDTO.pseudo
+        self.nom = benevoleDTO.nom
+        self.prenom = benevoleDTO.prenom
+        self.password = benevoleDTO.password
+        self.email = benevoleDTO.email
+        self.numTel = benevoleDTO.numTel
+        self.chercheLogement = benevoleDTO.chercheLogement
+        self.taille = benevoleDTO.taille
+        self.vegetarien = benevoleDTO.vegetarien
     }
     
     func hash(into hasher: inout Hasher){
@@ -114,7 +126,25 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
     
     
     func register(obs: ViewModelObserver){
-            self.observers.append(obs)
+        self.observers.append(obs)
+    }
+    
+    @Published var state : BenevoleState = .ready
+    {
+        didSet
+        {
+            switch state
+            {
+                case .ready:
+                    debugPrint("view model : ready")
+                case .loggedIn(let benevoleDTO):
+                    debugPrint("view model : loggedin")
+                    initialiser(benevoleDTO: benevoleDTO)
+                case .authFailed(let error):
+                    debugPrint(("view model : authentification failed"))
+                    self.authFailedMessage = "\(error)"
+            }
         }
+    }
     
 }

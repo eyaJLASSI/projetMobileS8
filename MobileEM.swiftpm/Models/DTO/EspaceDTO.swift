@@ -23,9 +23,9 @@ class EspaceDTO : Decodable, Encodable, Equatable {
     
     static func == (lhs: EspaceDTO, rhf: EspaceDTO) -> Bool {
         return
-        lhs.idEspace == rhf.idEspace &&
-        lhs.libelleEspace == rhf.libelleEspace
-        lhs.isAnimation == rhf.isAnimation
+            lhs.idEspace      == rhf.idEspace      &&
+            lhs.libelleEspace == rhf.libelleEspace &&
+            lhs.isAnimation   == rhf.isAnimation
 
     }
     

@@ -71,6 +71,7 @@ struct LoginView: View {
     func login() {
         // logique de connexion ici, par exemple en appelant une API
         // Validation des champs
+        debugPrint("bllblbl")
         guard !username.isEmpty && !password.isEmpty else {
             errorMessage = "Veuillez remplir tous les champs"
             return
