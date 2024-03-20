@@ -26,6 +26,7 @@ class EnvironmentHelper {
         }
         else
         {
+            // Ici on pourrait arrêter l'execution de l'app, si on a pas d'url, ça sert à rien de continuer.
             debugPrint("FAILED TO GET API URL")
             return nil
         }

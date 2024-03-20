@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct PlanningPersonnelView: View {
+    @ObservedObject var sinscrireVM : SinscrireViewModel
+    
+    let pseudo : String
+    
     let creneauxSamedi = ["8h - 11h","11h - 14h","14h - 17h","17h - 20h"]
     
     let creneauxDimanche = ["8h - 11h","11h - 14h","14h - 17h","17h - 20h"]
@@ -10,15 +14,13 @@ struct PlanningPersonnelView: View {
     @State var postesDimanche = ["Cuisine", "Accueil", "Vide", "Ménage"]
     
     var body: some View {
-        Text("Planning Personnel")
-            .font(.title)
-            .padding(40)
-        Spacer()
+        let inscriptionPosteIntent = InscriptionPosteIntent(sinscrireViewModel: sinscrireVM)
         
         VStack{
             HStack{
-                Text("")
-                
+                Text("Planning Personnel")
+                    .font(.title)
+                    .padding(40)
             }
             ScrollView{
                 Text("Samedi")
@@ -70,12 +72,31 @@ struct PlanningPersonnelView: View {
                 }
             }
         }
+        .onAppear {
+            // Call your function here
+            Task {
+                // Perform your setup tasks or fetch data here
+                debugPrint("Fetching data...")
+                
+                var result = await inscriptionPosteIntent.getInscriptionsByPseudo(pseudo: pseudo)
+                
+                if (result)
+                {
+                    debugPrint("Wihii")
+                    debugPrint(sinscrireVM.inscriptions.count)
+                }
+                else
+                {
+                    debugPrint(":c")
+                }
+            }
+        }
     }
 }
 
 
 struct PlanningPersonnelView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningPersonnelView()
+        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), pseudo: "blipbloup")
     }
 }

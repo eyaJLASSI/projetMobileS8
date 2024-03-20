@@ -9,7 +9,10 @@ import Foundation
 
 class BenevoleService {
     var api : String
-    func getBenevoleByPseudoUrl(pseudo : String) -> String { "users?pseudo=\(pseudo)" }
+    private func getBenevoleByPseudoUrl(pseudo : String) -> String
+    {
+        "users?pseudo=\(pseudo)"
+    }
     
     init(){
         if let url = EnvironmentHelper.getApi()

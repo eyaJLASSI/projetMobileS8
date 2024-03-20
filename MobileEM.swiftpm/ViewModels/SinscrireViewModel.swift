@@ -1,28 +1,19 @@
 //
-//  File 2.swift
+//  SinscrireViewModel.swift
 //  
 //
-//  Created by etud on 19/03/2024.
+//  Created by etud on 20/03/2024.
 //
 
 import Foundation
 
+
 class SinscrireViewModel : ObservableObject, Hashable, Identifiable {
-    static func == (lhs: SinscrireViewModel, rhs: SinscrireViewModel) -> Bool {
-        return lhs.isAffected == rhs.isAffected
-    }
-    
     
     var observers : [ViewModelObserver] = []
     
-    @Published var isAffected : Bool
-    @Published var isAccepted : Bool
-    @Published var creneauId : Int
-    @Published var espaceId : Int
-    @Published var idF : Int
-
     
-    @Published var benevolePseudo : String{
+    @Published var inscriptions : [InscriptionDTO] {
             didSet{
                 for o in self.observers{
                     o.viewModelUpdated()
@@ -30,34 +21,40 @@ class SinscrireViewModel : ObservableObject, Hashable, Identifiable {
             }
         }
 
-    init(SinscrireDTO : SinscrireDTO){
-        self.isAffected = SinscrireDTO.isAffected
-        self.isAccepted = SinscrireDTO.isAccepted
-        self.creneauId = SinscrireDTO.creneauId
-        self.espaceId = SinscrireDTO.espaceId
-        self.idF = SinscrireDTO.idF
-        self.benevolePseudo = SinscrireDTO.benevolePseudo
-
-        
+    init(inscriptionDTOs : [InscriptionDTO]){
+        inscriptions = inscriptionDTOs
     }
     
-    init(){
-        self.isAffected = true
-        self.isAccepted = true
-        self.creneauId = 3 // A enlever après
-        self.espaceId = 3 // A enlever après
-        self.idF = 2 // A voir !!
-        self.benevolePseudo = ""
-
+    init() {
+        inscriptions = []
     }
     
     func hash(into hasher: inout Hasher){
-        hasher.combine(self.isAccepted)
+        hasher.combine(self.inscriptions)
     }
     
     
     func register(obs: ViewModelObserver){
-            self.observers.append(obs)
+        self.observers.append(obs)
+    }
+    
+    static func == (lhs: SinscrireViewModel, rhs: SinscrireViewModel) -> Bool {
+        return lhs.inscriptions == rhs.inscriptions
+    }
+    
+    @Published var state : InscriptionState = .ready
+    {
+        didSet
+        {
+            switch state
+            {
+                case .ready:
+                    debugPrint("view model : ready")
+                case .loaded(let inscriptions):
+                    debugPrint("view model : loggedin")
+                    self.inscriptions = inscriptions
+            }
         }
+    }
     
 }
