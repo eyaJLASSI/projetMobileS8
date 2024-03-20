@@ -139,7 +139,7 @@ struct AdditionalInfoView: View {
     public func signup() async {
         let authentificationIntent = await AuthentificationIntent(benevoleViewModel: benevoleVM)
         
-        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian, tshirtSize: tshirtSize)
+        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian, tshirtSize: tshirtSize)
         if (register == true)
         {
             debugPrint("Youpi")

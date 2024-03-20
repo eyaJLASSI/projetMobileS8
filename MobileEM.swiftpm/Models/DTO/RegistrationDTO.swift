@@ -15,7 +15,6 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
     var email : String = ""
     var password : String = ""
     var numTel : String = ""
-    var association : String = ""
     var chercheLogement: Bool
     var taille: String
     var vegetarian: Bool
@@ -27,7 +26,6 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         self.email = registrationVM.email
         self.password = registrationVM.password
         self.numTel = registrationVM.numTel
-        self.association = registrationVM.association
         self.chercheLogement = registrationVM.chercheLogement
         self.taille = registrationVM.taille
         self.vegetarian = registrationVM.vegetarian
@@ -40,7 +38,6 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         email : String,
         password : String,
         numTel : String,
-        association : String,
         chercheLogement : Bool,
         taille : String,
         vegetarian : Bool
@@ -52,7 +49,6 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         self.email = email
         self.password = password
         self.numTel = numTel
-        self.association = association
         self.chercheLogement = chercheLogement
         self.taille = taille
         self.vegetarian = vegetarian
@@ -65,7 +61,9 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         lhs.email == rhf.email &&
         lhs.password == rhf.password &&
         lhs.numTel == rhf.numTel &&
-        lhs.association == rhf.association
+        lhs.chercheLogement == rhf.chercheLogement &&
+        lhs.taille == rhf.taille &&
+        lhs.vegetarian == rhf.vegetarian 
     }
     
 }

@@ -90,7 +90,6 @@ class AuthentificationService
         email : String,
         password : String,
         numTel : String,
-        association: String,
         chercheLogement: Bool,
         taille: String,
         vegetarian: Bool
@@ -110,7 +109,7 @@ class AuthentificationService
         
         // On va creer un DTO de login, pour pouvoir le transformer en JSON et l'utiliser dans la requête post
         // L'object LoginDto hérite de Encodable, c'est pour ça que je peux l'utiliser avec cette methode
-        let registerDto : RegistrationDTO = RegistrationDTO(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, association: association, chercheLogement: chercheLogement, taille: taille, vegetarian: vegetarian)
+        let registerDto : RegistrationDTO = RegistrationDTO(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, chercheLogement: chercheLogement, taille: taille, vegetarian: vegetarian)
         guard let json : Data = await JSONHelper.encode(data: registerDto)
         else
         {
@@ -123,7 +122,7 @@ class AuthentificationService
             let (data, response) = try await URLSession.shared.upload(for: request, from: json)
             let httpresponse = response as! HTTPURLResponse // le bon type
 
-            if (httpresponse.statusCode == 200)
+            if (httpresponse.statusCode == 201)
             {
                 guard let decoded : AuthDTO = await JSONHelper.decodeOne(data: data)
                 else
@@ -135,7 +134,7 @@ class AuthentificationService
             }
             else
             {
-                return .failure(RegistrationErrors.failedRegister)
+                return .failure(RegistrationErrors.failedRegister(errorCode: httpresponse.statusCode, json: json.description))
             }
         }
         catch

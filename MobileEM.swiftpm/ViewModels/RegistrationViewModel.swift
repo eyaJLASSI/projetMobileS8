@@ -54,14 +54,6 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
             }
         }
     }
-    
-    @Published var association : String{
-        didSet{
-            for o in self.observers{
-                o.viewModelUpdated()
-            }
-        }
-    }
 
     @Published var numTel : String{
         didSet{
@@ -105,7 +97,6 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.password = registrationDTO.password
         self.email = registrationDTO.email
         self.numTel = registrationDTO.numTel
-        self.association = registrationDTO.association
         self.chercheLogement = registrationDTO.chercheLogement
         self.taille = registrationDTO.taille
         self.vegetarian = registrationDTO.vegetarian
@@ -118,7 +109,6 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.password=""
         self.email=""
         self.numTel=""
-        self.association=""
         self.taille=""
         self.chercheLogement=false
         self.vegetarian=false
@@ -132,7 +122,6 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.password = registrationDTO.password
         self.email = registrationDTO.email
         self.numTel = registrationDTO.numTel
-        self.association = registrationDTO.association
         self.chercheLogement = registrationDTO.chercheLogement
         self.taille = registrationDTO.taille
         self.vegetarian = registrationDTO.vegetarian

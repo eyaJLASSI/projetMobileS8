@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct InscriptionView2: View {
     @State private var firstName: String = ""
@@ -13,12 +14,17 @@ struct InscriptionView2: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var email: String = ""
-    @State private var association: String = ""
     @State private var phoneNumber: String = ""
     @State private var chercheUnLogement: Bool = false
     @State private var isVegetarian: Bool = false
-    @State private var tshirtSize: String=""
-    let tshirtSizes = ["S", "M", "L"]
+    
+    enum TeeShirtSizes: String, CaseIterable, Identifiable {
+        case S, M, L
+        var id: Self { self }
+    }
+
+    @State private var tshirtSize: TeeShirtSizes = .S
+    
     @State private var isRegistered = false
     let benevoleVM: BenevoleViewModel
     
@@ -32,31 +38,52 @@ struct InscriptionView2: View {
             VStack {
                 TextField("Prénom", text: $firstName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                     .padding()
 
                 TextField("Nom", text: $lastName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                     .padding()
 
                 TextField("Pseudo", text: $username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                     .padding()
 
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                     .padding()
 
                 SecureField("Mot de passe", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                     .padding()
 
-                TextField("Association", text: $association)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                //TextField("Association", text: $association)
+                //    .textFieldStyle(RoundedBorderTextFieldStyle())
+                //    .padding()
 
                 TextField("Numéro de téléphone", text: $phoneNumber)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
                     .padding()
+                    .onReceive(Just(phoneNumber)) { newValue in
+                        // Check that new char is a number
+                        let allowedCharacters = "0123456789"
+                        let filtered = newValue.filter
+                        {
+                            allowedCharacters.contains($0)
+                        }
+                        if filtered != newValue {
+                            self.phoneNumber = filtered
+                        }
+                        
+                        if phoneNumber.count > 10 {
+                            phoneNumber = String(phoneNumber.prefix(10))
+                        }
+                    }
 
                 HStack {
                     Text("Cherche un logement ?")
@@ -81,9 +108,9 @@ struct InscriptionView2: View {
                         .font(.headline)
                         .padding(.bottom, 4)
                     Spacer()
-                    Picker(selection: $tshirtSize, label: Text("")) {
-                        ForEach(0 ..< tshirtSizes.count) {
-                            Text(self.tshirtSizes[$0])
+                    Picker("Taille du tee-Shirt", selection: $tshirtSize) {
+                        ForEach(TeeShirtSizes.allCases) { size in
+                            Text(size.rawValue.capitalized)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
@@ -118,7 +145,7 @@ struct InscriptionView2: View {
     public func signup() async {
         let authentificationIntent = await AuthentificationIntent(benevoleViewModel: benevoleVM)
         
-        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian ,tshirtSize: tshirtSize )
+        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian ,tshirtSize: tshirtSize.rawValue.capitalized )
         if (register == true)
         {
             debugPrint("Youpi")
@@ -136,4 +163,3 @@ struct InscriptionView2_Previews: PreviewProvider {
         InscriptionView2(benevoleVM: BenevoleViewModel())
     }
 }
-

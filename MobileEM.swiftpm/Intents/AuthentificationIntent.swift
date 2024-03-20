@@ -59,7 +59,6 @@ public struct AuthentificationIntent
         email : String,
         password : String,
         numTel : String,
-        association: String,
         chercheUnLogement: Bool,
         isVegetarian: Bool,
         tshirtSize: String
@@ -68,7 +67,7 @@ public struct AuthentificationIntent
         let authentificationService = AuthentificationService()
         let benevoleService = BenevoleService()
 
-        let result = await authentificationService.register(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, association: association, chercheLogement: chercheUnLogement, taille: tshirtSize, vegetarian: isVegetarian)
+        let result = await authentificationService.register(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, chercheLogement: chercheUnLogement, taille: tshirtSize, vegetarian: isVegetarian)
         
         switch(result)
         {
@@ -88,7 +87,7 @@ public struct AuthentificationIntent
         switch benevole
         {
         case .success(let benevole):
-            debugPrint("benevole \(benevole?.email ?? "no email")")
+            debugPrint("benevole \(benevole?.pseudo ?? "no pseudo")")
             benevoleViewModel.state = .loggedIn(benevole!)
             return true
         case .failure(let error):

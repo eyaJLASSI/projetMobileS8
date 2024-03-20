@@ -10,7 +10,7 @@ import Foundation
 
 enum RegistrationErrors : Error, CustomStringConvertible{
     case failedUrl
-    case failedRegister
+    case failedRegister(errorCode: Int, json: String)
     case failedEncode
     case failedUpload
     case failedDecode
@@ -21,8 +21,8 @@ enum RegistrationErrors : Error, CustomStringConvertible{
         {
         case .failedUrl:
             return "Failed to create URL Object"
-        case .failedRegister:
-            return "Failed to register"
+        case .failedRegister(let errorCode, let json):
+            return "Failed to register, error code \(errorCode), json content \(json)"
         case .failedEncode:
             return "Failed to encode registrationDTO object to JSON"
         case .failedUpload:
