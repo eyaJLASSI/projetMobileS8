@@ -7,27 +7,21 @@
 
 import SwiftUI
 
-struct UserProfile {
-    let username: String
-    let email: String
-    let phoneNumber: String
-}
 
 struct ProfileView: View {
-    let user: UserProfile
+    let benevoleVM: BenevoleViewModel
     
     var body: some View {
         VStack {
-            Text("Profil de \(user.username)")
+            Text("Profil de \(benevoleVM.pseudo)")
                 .font(.title)
                 .padding()
             
-            Text("Nom: \(user.username)")
-            Text("Prenom: \(user.email)")
-            Text("Email: \(user.email)")
-            Text("Pseudo: \(user.email)")
-            Text("téléphone: \(user.phoneNumber)")
-            Text("Association: \(user.phoneNumber)")
+            Text("Nom: \(benevoleVM.nom)")
+            Text("Prenom: \(benevoleVM.prenom)")
+            Text("Email: \(benevoleVM.email)")
+            Text("Pseudo: \(benevoleVM.pseudo)")
+            Text("téléphone: \(benevoleVM.numTel)")
                 
             
         }
@@ -36,8 +30,8 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        let user = UserProfile(username: "UtilisateurTest", email: "utilisateur@test.com", phoneNumber: "1234")
-        return ProfileView(user: user)
+        let user = BenevoleViewModel()
+        return ProfileView(benevoleVM: user)
     }
 }
 

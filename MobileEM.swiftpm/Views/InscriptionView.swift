@@ -69,8 +69,10 @@ struct AdditionalInfoView: View {
     @State private var isVegetarian: Bool = false
     @State private var tshirtSize = 0
     @State private var tshirtSizes = ["S", "M", "L"]
-
+    let benevoleVM: BenevoleViewModel
     var body: some View {
+        
+        
         VStack {
             HStack {
                 Text("Cherche un logement ?")
@@ -117,7 +119,10 @@ struct AdditionalInfoView: View {
             Spacer()
 
             Button(action: {
-                self.signup()
+                Task
+                {
+                    await self.signup()
+                }
             }) {
                 Text("S'inscrire")
                     .padding()
@@ -130,11 +135,19 @@ struct AdditionalInfoView: View {
         .padding()
     }
 
-    func signup() {
-        // Logique d'inscription ici
-        print("Prénom: \(firstName), Nom: \(lastName), Pseudo: \(username), Mot de passe: \(password), Email: \(email), Association: \(association), Numéro de téléphone: \(phoneNumber), Cherche un logement: \(chercheUnLogement), Végétarien: \(isVegetarian), Taille du t-shirt: \(tshirtSizes[tshirtSize])")
-
-        //Ajouter logique d'inscription iciappel API
+    public func signup() async {
+        let authentificationIntent = await AuthentificationIntent(benevoleViewModel: benevoleVM)
+        
+        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association)
+        if (register == true)
+        {
+            debugPrint("Youpi")
+            isRegistered = true
+        }
+        else
+        {
+            debugPrint(":(")
+        }
     }
 }
 

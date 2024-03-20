@@ -26,6 +26,7 @@ class EnvironmentHelper {
         }
         else
         {
+            debugPrint("FAILED TO GET API URL")
             return nil
         }
     }

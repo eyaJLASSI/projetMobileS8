@@ -9,7 +9,7 @@ import Foundation
 
 class BenevoleService {
     var api : String
-    func getBenevoleByIdUrl(pseudo : String) -> String { "/benevole/\(pseudo)" }
+    func getBenevoleByPseudoUrl(pseudo : String) -> String { "users?pseudo=\(pseudo)" }
     
     init(){
         if let url = EnvironmentHelper.getApi()
@@ -25,7 +25,7 @@ class BenevoleService {
     public func getUserByPseudo(pseudo: String) async -> Result<BenevoleDTO?, Error>
     {
         // Concatener l'host avec l'uri
-        guard let getBenevole = URL(string: "\(self.api)\(self.getBenevoleByIdUrl(pseudo: pseudo))")
+        guard let getBenevole = URL(string: "\(self.api)\(self.getBenevoleByPseudoUrl(pseudo: pseudo))")
         else
         {
             return .failure(BenevoleErrors.failedUrl)

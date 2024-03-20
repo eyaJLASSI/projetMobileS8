@@ -81,6 +81,7 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         }
     }
     
+    
     @Published var authFailedMessage : String = ""
     
     init(BenevoleDTO : BenevoleDTO){
@@ -92,7 +93,7 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         self.numTel = BenevoleDTO.numTel
         self.chercheLogement = BenevoleDTO.chercheLogement
         self.taille = BenevoleDTO.taille
-        self.vegetarien = BenevoleDTO.vegetarien
+        self.vegetarien = BenevoleDTO.vegetarian
     }
     
     init(){
@@ -117,7 +118,7 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
         self.numTel = benevoleDTO.numTel
         self.chercheLogement = benevoleDTO.chercheLogement
         self.taille = benevoleDTO.taille
-        self.vegetarien = benevoleDTO.vegetarien
+        self.vegetarien = benevoleDTO.vegetarian
     }
     
     func hash(into hasher: inout Hasher){

@@ -51,4 +51,47 @@ public struct AuthentificationIntent
             return false
         }
     }
+    
+    public func register(
+        prenom : String,
+        nom : String,
+        pseudo : String,
+        email : String,
+        password : String,
+        numTel : String,
+        association: String
+    ) async -> Bool
+    {
+        let authentificationService = AuthentificationService()
+        let benevoleService = BenevoleService()
+
+        let result = await authentificationService.register(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, association: association)
+        
+        switch(result)
+        {
+        case .success(let token):
+            // Token valide
+            debugPrint(token.token)
+            
+        case .failure(let failure):
+            debugPrint(failure)
+            // Si on pass ici, ca veut dire que le login a échoue.
+            // On retourne et la fonction s'arrete ici.
+            return false
+        }
+        
+        //tocken valide
+        let benevole = await benevoleService.getUserByPseudo(pseudo: pseudo)
+        switch benevole
+        {
+        case .success(let benevole):
+            debugPrint("benevole \(benevole?.email ?? "no email")")
+            benevoleViewModel.state = .loggedIn(benevole!)
+            return true
+        case .failure(let error):
+            debugPrint(error)
+            benevoleViewModel.state = .authFailed(error)
+            return false
+        }
+    }
 }

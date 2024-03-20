@@ -17,7 +17,7 @@ class BenevoleDTO : Decodable, Encodable, Equatable {
     var numTel          : String
     var chercheLogement : Bool
     var taille          : String
-    var vegetarien      : Bool
+    var vegetarian      : Bool
     
     init(benevoleVM : BenevoleViewModel ){
         self.pseudo          = benevoleVM.pseudo
@@ -28,7 +28,7 @@ class BenevoleDTO : Decodable, Encodable, Equatable {
         self.numTel          = benevoleVM.numTel
         self.chercheLogement = benevoleVM.chercheLogement
         self.taille          = benevoleVM.taille
-        self.vegetarien      = benevoleVM.vegetarien
+        self.vegetarian      = benevoleVM.vegetarien
 
     }
     
@@ -44,7 +44,7 @@ class BenevoleDTO : Decodable, Encodable, Equatable {
             lhs.numTel          == rhf.numTel          &&
             lhs.chercheLogement == rhf.chercheLogement &&
             lhs.taille          == rhf.taille          &&
-            lhs.vegetarien      == rhf.vegetarien
+            lhs.vegetarian      == rhf.vegetarian
         
     }
     

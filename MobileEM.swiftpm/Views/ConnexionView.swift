@@ -11,11 +11,14 @@ struct LoginView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String?
-    @ObservedObject private var viewModel = LoginViewModel()
+    @State private var isLoggedIn = false
+    @ObservedObject private var viewModel = BenevoleViewModel()
     @State private var isShowingInscriptionView = false //State pour gérer la navigation
 
     
     var body: some View {
+        let authentificationIntent = AuthentificationIntent(benevoleViewModel: viewModel)
+        
         NavigationView {
         VStack {
             Image("Logo")
@@ -30,15 +33,20 @@ struct LoginView: View {
             
             TextField("Nom Utilisateur", text: $username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.none)
                 .padding()
             
             SecureField("Mot de passe", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.none)
                 .padding()
             
             Button(action: {
                 // Action à exécuter lorsque le bouton est appuyé
-                self.login()
+                Task
+                {
+                    await self.login()
+                }
             }) {
                 Text("Se connecter")
                     .padding()
@@ -66,15 +74,29 @@ struct LoginView: View {
         .sheet(isPresented: $isShowingInscriptionView) {
             InscriptionView() // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
         }
+        .fullScreenCover(isPresented: $isLoggedIn) {
+            ProfileView(benvoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
+        }
     }
     
-    func login() {
+    func login() async {
+        let authentificationIntent = AuthentificationIntent(benevoleViewModel: viewModel)
+        
         // logique de connexion ici, par exemple en appelant une API
         // Validation des champs
-        debugPrint("bllblbl")
         guard !username.isEmpty && !password.isEmpty else {
             errorMessage = "Veuillez remplir tous les champs"
             return
+        }
+        let loggin = await authentificationIntent.login(pseudo: username, password: password)
+        if (loggin == true)
+        {
+            debugPrint("Youpi")
+            isLoggedIn = true
+        }
+        else
+        {
+            debugPrint(":(")
         }
     }
 }
