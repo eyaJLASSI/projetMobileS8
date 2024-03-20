@@ -75,7 +75,7 @@ struct LoginView: View {
             InscriptionView() // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
         }
         .fullScreenCover(isPresented: $isLoggedIn) {
-            ProfileView(benvoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
+            ProfileView(benevoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
         }
     }
     

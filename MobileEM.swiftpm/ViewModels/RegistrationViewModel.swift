@@ -8,6 +8,10 @@
 import Foundation
 
 class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
+    static func == (lhs: RegistrationViewModel, rhs: RegistrationViewModel) -> Bool {
+        return lhs.pseudo == rhs.pseudo
+    }
+    
     
     var observers : [ViewModelObserver] = []
     
@@ -87,7 +91,7 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.password=""
         self.email=""
         self.numTel=""
-        self.association""
+        self.association=""
     }
     
     func initialiser(registrationDTO: RegistrationDTO)
@@ -118,9 +122,9 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
             {
                 case .ready:
                     debugPrint("view model : ready")
-            case .registered(let registrationDto)
+            case .registered(let registrationDto):
                 debugPrint("Registered user \(registrationDto.pseudo)")
-            case.registrationFailed(let error)
+            case.registrationFailed(let error):
                 debugPrint("Failed to register used. Error : \(error)")
             }
         }

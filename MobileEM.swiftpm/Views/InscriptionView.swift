@@ -46,7 +46,7 @@ struct BasicInfoView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
 
-            NavigationLink(destination: AdditionalInfoView(firstName: firstName, lastName: lastName, username: username, password: password, email: email, association: association, phoneNumber: phoneNumber)) {
+            NavigationLink(destination: AdditionalInfoView(firstName: firstName, lastName: lastName, username: username, password: password, email: email, association: association, phoneNumber: phoneNumber, benevoleVM: BenevoleViewModel())) {
                 Text("Suivant")
             }
             .padding()
@@ -69,6 +69,7 @@ struct AdditionalInfoView: View {
     @State private var isVegetarian: Bool = false
     @State private var tshirtSize = 0
     @State private var tshirtSizes = ["S", "M", "L"]
+    @State private var isRegistered = false
     let benevoleVM: BenevoleViewModel
     var body: some View {
         

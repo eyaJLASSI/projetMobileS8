@@ -27,7 +27,7 @@ enum RegistrationErrors : Error, CustomStringConvertible{
             return "Failed to encode registrationDTO object to JSON"
         case .failedUpload:
             return "Failed to send request"
-        case .failedDecode
+        case .failedDecode:
             return "Failed to decode response"
         }
     }
