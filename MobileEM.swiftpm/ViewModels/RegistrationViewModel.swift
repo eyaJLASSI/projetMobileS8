@@ -71,6 +71,30 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         }
     }
     
+    @Published var chercheLogement : Bool{
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+    
+    @Published var taille : String{
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+    
+    @Published var vegetarian : Bool{
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+    
     
     @Published var registratonFailedMessage : String = ""
     
@@ -82,6 +106,9 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.email = registrationDTO.email
         self.numTel = registrationDTO.numTel
         self.association = registrationDTO.association
+        self.chercheLogement = registrationDTO.chercheLogement
+        self.taille = registrationDTO.taille
+        self.vegetarian = registrationDTO.vegetarian
     }
     
     init(){
@@ -92,6 +119,9 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.email=""
         self.numTel=""
         self.association=""
+        self.taille=""
+        self.chercheLogement=false
+        self.vegetarian=false
     }
     
     func initialiser(registrationDTO: RegistrationDTO)
@@ -103,6 +133,9 @@ class RegistrationViewModel : ObservableObject, Hashable, Identifiable {
         self.email = registrationDTO.email
         self.numTel = registrationDTO.numTel
         self.association = registrationDTO.association
+        self.chercheLogement = registrationDTO.chercheLogement
+        self.taille = registrationDTO.taille
+        self.vegetarian = registrationDTO.vegetarian
     }
     
     func hash(into hasher: inout Hasher){

@@ -72,7 +72,7 @@ struct LoginView: View {
         .padding()
         .navigationBarHidden(true) // Masquer la barre de navigation de cette vue
         .sheet(isPresented: $isShowingInscriptionView) {
-            InscriptionView() // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
+            InscriptionView2(benevoleVM: BenevoleViewModel()) // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
         }
         .fullScreenCover(isPresented: $isLoggedIn) {
             ProfileView(benevoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai

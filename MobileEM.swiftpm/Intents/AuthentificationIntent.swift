@@ -59,13 +59,16 @@ public struct AuthentificationIntent
         email : String,
         password : String,
         numTel : String,
-        association: String
+        association: String,
+        chercheUnLogement: Bool,
+        isVegetarian: Bool,
+        tshirtSize: String
     ) async -> Bool
     {
         let authentificationService = AuthentificationService()
         let benevoleService = BenevoleService()
 
-        let result = await authentificationService.register(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, association: association)
+        let result = await authentificationService.register(prenom: prenom, nom: nom, pseudo: pseudo, email: email, password: password, numTel: numTel, association: association, chercheLogement: chercheUnLogement, taille: tshirtSize, vegetarian: isVegetarian)
         
         switch(result)
         {

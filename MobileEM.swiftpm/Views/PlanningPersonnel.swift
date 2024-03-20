@@ -73,3 +73,9 @@ struct PlanningPersonnelView: View {
     }
 }
 
+
+struct PlanningPersonnelView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlanningPersonnelView()
+    }
+}

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RegistrationView: View {
+struct InscriptionView2: View {
     @State private var firstName: String = ""
     @State private var lastName: String = ""
     @State private var username: String = ""
@@ -17,11 +17,17 @@ struct RegistrationView: View {
     @State private var phoneNumber: String = ""
     @State private var chercheUnLogement: Bool = false
     @State private var isVegetarian: Bool = false
-    @State private var tshirtSize = 0
+    @State private var tshirtSize: String=""
     let tshirtSizes = ["S", "M", "L"]
     @State private var isRegistered = false
+    let benevoleVM: BenevoleViewModel
     
     var body: some View {
+        Text("Inscription")
+            .font(.title)
+            .padding(40)
+        Spacer()
+        
         ScrollView {
             VStack {
                 TextField("Prénom", text: $firstName)
@@ -83,27 +89,51 @@ struct RegistrationView: View {
                     .pickerStyle(MenuPickerStyle())
                 }
                 .padding()
-
+                
                 
                 .alert(isPresented: $isRegistered) {
                     Alert(title: Text("Inscription réussie"), message: Text("Vous êtes inscrit avec succès!"), dismissButton: .default(Text("OK")))
                 }
+                
             }
             .padding()
+            
+            Button(action: {
+                    Task
+                    {
+                        await self.signup()
+                    }
+                }) {
+                    Text("S'inscrire")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
         }
         .navigationBarTitle("Inscription")
     }
 
-    private func signup() {
-        // Ajoutez ici la logique d'inscription, par exemple en appelant une fonction dans votre ViewModel
-        // Après l'inscription réussie, vous pouvez définir la variable `isRegistered` sur true pour afficher l'alerte
-        isRegistered = true
+    public func signup() async {
+        let authentificationIntent = await AuthentificationIntent(benevoleViewModel: benevoleVM)
+        
+        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian ,tshirtSize: tshirtSize )
+        if (register == true)
+        {
+            debugPrint("Youpi")
+            isRegistered = true
+        }
+        else
+        {
+            debugPrint(":(")
+        }
     }
 }
 
-struct RegistrationView_Previews: PreviewProvider {
+struct InscriptionView2_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView()
+        InscriptionView2(benevoleVM: BenevoleViewModel())
     }
 }
 

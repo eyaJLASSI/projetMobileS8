@@ -67,7 +67,7 @@ struct AdditionalInfoView: View {
 
     @State private var chercheUnLogement: Bool = false
     @State private var isVegetarian: Bool = false
-    @State private var tshirtSize = 0
+    @State private var tshirtSize: String=""
     @State private var tshirtSizes = ["S", "M", "L"]
     @State private var isRegistered = false
     let benevoleVM: BenevoleViewModel
@@ -139,7 +139,7 @@ struct AdditionalInfoView: View {
     public func signup() async {
         let authentificationIntent = await AuthentificationIntent(benevoleViewModel: benevoleVM)
         
-        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association)
+        let register = await authentificationIntent.register(prenom: firstName, nom: lastName, pseudo: username, email: email, password: password, numTel: phoneNumber, association: association, chercheUnLogement: chercheUnLogement, isVegetarian: isVegetarian, tshirtSize: tshirtSize)
         if (register == true)
         {
             debugPrint("Youpi")

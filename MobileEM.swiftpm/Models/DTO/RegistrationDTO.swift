@@ -16,6 +16,9 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
     var password : String = ""
     var numTel : String = ""
     var association : String = ""
+    var chercheLogement: Bool
+    var taille: String
+    var vegetarian: Bool
     
     init(registrationVM : RegistrationViewModel ){
         self.prenom = registrationVM.prenom
@@ -25,6 +28,9 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         self.password = registrationVM.password
         self.numTel = registrationVM.numTel
         self.association = registrationVM.association
+        self.chercheLogement = registrationVM.chercheLogement
+        self.taille = registrationVM.taille
+        self.vegetarian = registrationVM.vegetarian
     }
     
     init(
@@ -34,7 +40,10 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         email : String,
         password : String,
         numTel : String,
-        association : String
+        association : String,
+        chercheLogement : Bool,
+        taille : String,
+        vegetarian : Bool
     )
     {
         self.prenom = prenom
@@ -44,6 +53,9 @@ class RegistrationDTO : Decodable, Encodable, Equatable {
         self.password = password
         self.numTel = numTel
         self.association = association
+        self.chercheLogement = chercheLogement
+        self.taille = taille
+        self.vegetarian = vegetarian
     }
     static func == (lhs: RegistrationDTO, rhf: RegistrationDTO) -> Bool {
         return
