@@ -45,7 +45,21 @@ class EspaceViewModel : ObservableObject, Hashable, Identifiable {
     
     
     func register(obs: ViewModelObserver){
-            self.observers.append(obs)
-        }
+        self.observers.append(obs)
+    }
     
+    @Published var state : EspaceState = .ready
+    {
+        didSet
+        {
+            switch state
+            {
+                case .ready:
+                    debugPrint("view model : ready")
+                case .loaded :
+                    debugPrint("view model : espace found")
+            }
+        }
+    }
+
 }

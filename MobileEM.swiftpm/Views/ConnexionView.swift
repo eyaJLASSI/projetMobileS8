@@ -76,7 +76,7 @@ struct LoginView: View {
         }
         .fullScreenCover(isPresented: $isLoggedIn) {
             //ProfileView(benevoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
-            PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), pseudo: self.username, postesSamedi: ["Cuisine", "Accueil", "Animation Esplanade G1", "Ménage"], postesDimanche: ["Cuisine", "Accueil", "Vide", "Ménage"])
+            PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), pseudo: self.username)
         }
     }
     

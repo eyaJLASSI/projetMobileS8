@@ -55,12 +55,12 @@ class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
     var description: String
     {
         return """
-    isAffected : \(isAffected)
-    isAccepted : \(isAccepted)
+    isAffected     : \(isAffected)
+    isAccepted     : \(isAccepted)
     benevolePseudo : \(benevolePseudo)
-    creneauId : \(creneauId)
-    espaceId : \(espaceId)
-    idF : \(idF)
+    creneauId      : \(creneauId)
+    espaceId       : \(espaceId)
+    idF            : \(idF)
     """
     }
     

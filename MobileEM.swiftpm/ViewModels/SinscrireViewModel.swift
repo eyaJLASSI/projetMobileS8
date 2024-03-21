@@ -13,7 +13,7 @@ class SinscrireViewModel : ObservableObject, Hashable, Identifiable {
     var observers : [ViewModelObserver] = []
     
     
-    @Published var inscriptions : [InscriptionDTO] {
+    @Published var inscriptions : [InscriptionWithAllInfosDTO] {
             didSet{
                 for o in self.observers{
                     o.viewModelUpdated()
@@ -21,7 +21,7 @@ class SinscrireViewModel : ObservableObject, Hashable, Identifiable {
             }
         }
 
-    init(inscriptionDTOs : [InscriptionDTO]){
+    init(inscriptionDTOs : [InscriptionWithAllInfosDTO]){
         inscriptions = inscriptionDTOs
     }
     

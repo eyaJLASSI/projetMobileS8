@@ -79,4 +79,18 @@ class CreneauViewModel : ObservableObject, Hashable, Identifiable {
             self.observers.append(obs)
         }
     
+    @Published var state : CreneauState = .ready
+    {
+        didSet
+        {
+            switch state
+            {
+                case .ready:
+                    debugPrint("view model : ready")
+                case .loaded :
+                    debugPrint("view model : creneau found")
+            }
+        }
+    }
+    
 }

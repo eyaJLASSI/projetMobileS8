@@ -41,29 +41,29 @@ struct InscriptionDimancheView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        
-                        NavigationLink(destination: ProfilView()){
-                            Image(systemName: "person")
-                        }
-                        
-                        Spacer()
-                        
-                        NavigationLink(destination: PlanningPersonnelView()){
-                            Image(systemName: "calendar")
-                        }
-                        
-                        Spacer()
-                        
-                        NavigationLink(destination: InscriptionSamediView()){
-                            Image(systemName: "list.bullet.clipboard")
-                        }
-                        
-                        Spacer()
-                        
-                        NavigationLink(destination: ProfilView()){
-                            Image(systemName: "hourglass")
-                        }
-                        Spacer()
+                        //
+                        //NavigationLink(destination: ProfileView()){
+                        //    Image(systemName: "person")
+                        //}
+                        //
+                        //Spacer()
+                        //
+                        //NavigationLink(destination: PlanningPersonnelView()){
+                        //    Image(systemName: "calendar")
+                        //}
+                        //
+                        //Spacer()
+                        //
+                        //NavigationLink(destination: InscriptionSamediView()){
+                        //    Image(systemName: "list.bullet.clipboard")
+                        //}
+                        //
+                        //Spacer()
+                        //
+                        //NavigationLink(destination: ProfileView()){
+                        //    Image(systemName: "hourglass")
+                        //}
+                        //Spacer()
                         
                         /*
                          NavigationLink(destination: FithView()){

@@ -42,7 +42,21 @@ class PosteViewModel : ObservableObject, Hashable, Identifiable {
     
     
     func register(obs: ViewModelObserver){
-            self.observers.append(obs)
+        self.observers.append(obs)
+    }
+    
+    @Published var state : PosteState = .ready
+    {
+        didSet
+        {
+            switch state
+            {
+                case .ready:
+                    debugPrint("view model : ready")
+                case .loaded :
+                    debugPrint("view model : poste found")
+            }
         }
+    }
     
 }

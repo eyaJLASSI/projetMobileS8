@@ -10,7 +10,7 @@ import SwiftUI
 enum InscriptionState : CustomStringConvertible
 {
     case ready
-    case loaded([InscriptionDTO])
+    case loaded([InscriptionWithAllInfosDTO])
     
     // permet de transformer l'objet case en en string
     var description: String

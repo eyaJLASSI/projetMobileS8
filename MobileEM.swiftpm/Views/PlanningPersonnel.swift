@@ -5,13 +5,17 @@ struct PlanningPersonnelView: View {
     
     let pseudo : String
     
-    let creneauxSamedi = ["8h - 11h","11h - 14h","14h - 17h","17h - 20h"]
+    var samediInscriptions: [InscriptionWithAllInfosDTO] {
+        sinscrireVM.inscriptions
+            .filter { $0.creneauDto.jourCreneau == "Samedi" }
+            .sorted { $0.creneauDto.heureDebut > $1.creneauDto.heureDebut }
+    }
     
-    let creneauxDimanche = ["8h - 11h","11h - 14h","14h - 17h","17h - 20h"]
-    
-    @State var postesSamedi = ["Cuisine", "Accueil", "Animation Esplanade G1", "Ménage"]
-    
-    @State var postesDimanche = ["Cuisine", "Accueil", "Vide", "Ménage"]
+    var dimancheInscriptions: [InscriptionWithAllInfosDTO] {
+        sinscrireVM.inscriptions
+            .filter { $0.creneauDto.jourCreneau == "Dimanche" }
+            .sorted { $0.creneauDto.heureDebut > $1.creneauDto.heureDebut }
+    }
     
     var body: some View {
         let inscriptionPosteIntent = InscriptionPosteIntent(sinscrireViewModel: sinscrireVM)
@@ -25,49 +29,41 @@ struct PlanningPersonnelView: View {
             ScrollView{
                 Text("Samedi")
                     .font(.title3)
-                ForEach(0..<creneauxSamedi.count, id: \.self) {index in
+                ForEach(samediInscriptions, id: \.self) { inscription in
                     HStack{
-                            Text(self.creneauxSamedi[index])
+                        Text("\(inscription.creneauDto.heureDebut) - \(inscription.creneauDto.heureFin)")
                                 .padding(10)
                         Divider()
-                        if(self.postesSamedi[index] != "Vide"){
-                            Text(self.postesSamedi[index])
-                            
-                            Spacer()
-                            Button(action: {
-                                print("Supprime")
-                            }){
-                                Image(systemName: "trash")
-                            }
-                            .padding(10)
-                        } else {
-                            Spacer()
+                        Text(inscription.espaceDto.libelleEspace)
+                        
+                        Spacer()
+                        Button(action: {
+                            print("Supprime")
+                        }){
+                            Image(systemName: "trash")
                         }
+                        .padding(10)
                     }                  
                     Divider()
                 }
                 Spacer(minLength: 70)
                 Text("Dimanche")
                     .font(.title3)
-                ForEach(0..<creneauxDimanche.count, id: \.self) {index in
+                ForEach(dimancheInscriptions, id: \.self) {inscription in
                     HStack{
-                        Text(self.creneauxDimanche[index])
-                            .padding(10)
+                        Text("\(inscription.creneauDto.heureDebut) - \(inscription.creneauDto.heureFin)")
+                                .padding(10)
                         Divider()
-                        if(self.postesDimanche[index] != "Vide"){
-                            Text(self.postesDimanche[index])
-                            
-                            Spacer()
-                            Button(action: {
-                                print("Supprime")
-                            }){
-                                Image(systemName: "trash")
-                            }
-                            .padding(10)
-                        } else {
-                            Spacer()
+                        Text(inscription.espaceDto.libelleEspace)
+                        
+                        Spacer()
+                        Button(action: {
+                            print("Supprime")
+                        }){
+                            Image(systemName: "trash")
                         }
-                    }                  
+                        .padding(10)
+                    }
                     Divider()
                 }
             }
@@ -84,6 +80,12 @@ struct PlanningPersonnelView: View {
                 {
                     debugPrint("Wihii")
                     debugPrint(sinscrireVM.inscriptions.count)
+                    //for inscription in sinscrireVM.inscriptions
+                    //{
+                    //    debugPrint("=====================")
+                    //    debugPrint(inscription)
+                    //    debugPrint("=====================")
+                    //}
                 }
                 else
                 {

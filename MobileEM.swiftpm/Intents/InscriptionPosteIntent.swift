@@ -21,7 +21,7 @@ public struct InscriptionPosteIntent
     {
         let inscriptionPosteService = InscriptionPosteService()
         
-        let result = await inscriptionPosteService.getInscriptionsByPseudo(pseudo: pseudo)
+        let result = await inscriptionPosteService.getInscriptionWithAllInfosByPseudo(pseudo: pseudo)
 
         switch (result)
         {
