@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PosteDTO : Decodable, Encodable, Equatable {
+class PosteDTO : Decodable, Encodable, Equatable, Hashable, CustomStringConvertible {
     
     var idP : Int
     var libellePoste : String
@@ -24,4 +24,16 @@ class PosteDTO : Decodable, Encodable, Equatable {
         lhs.libellePoste == rhf.libellePoste
     }
     
+    func hash(into hasher: inout Hasher){
+        hasher.combine(self.idP)
+        hasher.combine(self.libellePoste)
+    }
+    
+    var description: String
+    {
+        return """
+    idP          : \(idP)
+    libellePoste : \(libellePoste)
+    """
+    }
 }

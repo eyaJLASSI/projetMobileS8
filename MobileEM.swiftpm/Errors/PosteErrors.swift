@@ -13,6 +13,8 @@ enum PosteErrors : Error, CustomStringConvertible{
     case failedGetPoste
     case failedDecode
     case failedThrow
+    case failedGetAllPostes
+
     
     var description: String
     {
@@ -26,6 +28,8 @@ enum PosteErrors : Error, CustomStringConvertible{
             return "Failed to decode poste"
         case .failedThrow:
             return "Failed to get poste, method throwed"
+        case .failedGetAllPostes:
+            return "Failed to get all postes"
         }
     }
 }

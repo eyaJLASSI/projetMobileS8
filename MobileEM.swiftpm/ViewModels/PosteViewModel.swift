@@ -9,7 +9,8 @@ import Foundation
 
 class PosteViewModel : ObservableObject, Hashable, Identifiable {
     static func == (lhs: PosteViewModel, rhs: PosteViewModel) -> Bool {
-        return lhs.idP == rhs.idP
+        return lhs.idP == rhs.idP &&
+        lhs.libellePoste == rhs.libellePoste
     }
     
     

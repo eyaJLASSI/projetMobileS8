@@ -37,4 +37,6 @@ public struct PosteIntent
             return false
         }
     }
+    
+    
 }

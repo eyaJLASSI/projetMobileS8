@@ -13,6 +13,8 @@ enum EspaceErrors : Error, CustomStringConvertible{
     case failedGetEspace
     case failedDecode
     case failedThrow
+    case failedGetAllEspaces
+
     
     var description: String
     {
@@ -26,6 +28,8 @@ enum EspaceErrors : Error, CustomStringConvertible{
             return "Failed to decode espace"
         case .failedThrow:
             return "Failed to get espace, method throwed"
+        case .failedGetAllEspaces:
+            return "Failed to get all espaces"
         }
     }
 }

@@ -18,6 +18,12 @@ class InscriptionPosteService
         return "inscriptions/\(pseudo)/2"
     }
     
+    private func getAllInscriptionsUrl(idF : Int) -> String
+    {
+        // Ici on fix le festival en attendant de pouvoir le choisir avec une liste déroulante.
+        return "users-registrations/\(idF)"
+    }
+    
     // Constructeur
     init()
     {
@@ -122,6 +128,49 @@ class InscriptionPosteService
         catch
         {
             debugPrint("Failed to get inscriptions. Errors : \(error)")
+            return .failure(InscriptionPosteErrors.failedThrow)
+        }
+    }
+    
+    public func getAllInscriptions(idF: Int) async -> Result<[InscriptionDTO], Error>
+    {
+        
+        // Concatener l'host avec l'uri
+        guard let getAllInscriptionsUrl = URL(string: "\(self.api)\(getAllInscriptionsUrl(idF: idF))")
+        else
+        {
+            return .failure(InscriptionPosteErrors.failedUrl)
+        }
+        
+        // Creer une requête Post
+        var request = URLRequest(url: getAllInscriptionsUrl)
+        request.httpMethod = "Get"
+        
+        do
+        {
+            // Envoyer la requete, avec en content le json encodé
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let httpresponse = response as! HTTPURLResponse // le bon type
+
+            if (httpresponse.statusCode == 200)
+            {
+                
+                guard let decoded : [InscriptionDTO] = await JSONHelper.decodeOne(data: data)
+                else
+                {
+                    return .failure(InscriptionPosteErrors.failedDecode)
+                }
+                
+                return .success(decoded)
+            }
+            else
+            {
+                return .failure(InscriptionPosteErrors.failedGetInscritption)
+            }
+        }
+        catch
+        {
+            debugPrint("Failed to get all inscriptions. Errors : \(error)")
             return .failure(InscriptionPosteErrors.failedThrow)
         }
     }

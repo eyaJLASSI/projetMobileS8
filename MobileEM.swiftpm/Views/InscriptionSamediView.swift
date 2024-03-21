@@ -79,3 +79,9 @@ struct InscriptionSamediView: View {
         }
     }
 }
+
+struct InscriptionSamediView_Preview: PreviewProvider {
+    static var previews: some View {
+        InscriptionSamediView()
+    }
+}

@@ -13,6 +13,8 @@ enum CreneauErrors : Error, CustomStringConvertible{
     case failedGetCreneau
     case failedDecode
     case failedThrow
+    case failedGetAllCreneaux
+
     
     var description: String
     {
@@ -26,6 +28,8 @@ enum CreneauErrors : Error, CustomStringConvertible{
             return "Failed to decode creneau"
         case .failedThrow:
             return "Failed to get creneau, method throwed"
+        case .failedGetAllCreneaux:
+            return "Failed to get All creneaux"
         }
     }
 }
