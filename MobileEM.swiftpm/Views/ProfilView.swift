@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ProfileView: View {
+struct ProfilView: View {
     let benevoleVM: BenevoleViewModel
     
     var body: some View {
@@ -28,10 +28,10 @@ struct ProfileView: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
+struct ProfilView_Previews: PreviewProvider {
     static var previews: some View {
         let user = BenevoleViewModel()
-        return ProfileView(benevoleVM: user)
+        return ProfilView(benevoleVM: user)
     }
 }
 
