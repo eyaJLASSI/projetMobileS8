@@ -2,6 +2,8 @@ import SwiftUI
 
 struct PlanningPersonnelView: View {
     @ObservedObject var sinscrireVM : SinscrireViewModel
+    //@ObservedObject var candidaterVM : CandidaterViewModel
+
     
     // TEST TO REMOVE
     @ObservedObject var planningVM : PlanningViewModel

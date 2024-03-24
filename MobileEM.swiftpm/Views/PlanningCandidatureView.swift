@@ -7,48 +7,48 @@
 
 import SwiftUI
 
-//struct PlanningCandidatureView: View {
-    //@ObservedObject var sinscrireVM : SinscrireViewModel
+struct PlanningCandidatureView: View {
+    @ObservedObject var candidaterVM : CandidaterViewModel
     
-    // TEST TO REMOVE
-    //@ObservedObject var planningVM : PlanningViewModel
+    //TEST TO REMOVE
+    @ObservedObject var planningCandVM : PlanningCandidatureViewModel
     
-    //let pseudo : String
+    let pseudo : String
     
-    /*
-    var samediInscriptions: [InscriptionWithAllInfosDTO] {
-        sinscrireVM.inscriptions
+    
+    var samediCandidatures: [CandidatureWithAllInfosDTO] {
+        candidaterVM.candidatures
             .filter { $0.creneauDto.jourCreneau == "Samedi" }
             .sorted { $0.creneauDto.heureDebut > $1.creneauDto.heureDebut }
     }
     
-    var dimancheInscriptions: [InscriptionWithAllInfosDTO] {
-        sinscrireVM.inscriptions
+    var dimancheCandidatures: [CandidatureWithAllInfosDTO] {
+        candidaterVM.candidatures
             .filter { $0.creneauDto.jourCreneau == "Dimanche" }
             .sorted { $0.creneauDto.heureDebut > $1.creneauDto.heureDebut }
     }
     
     var body: some View {
-        let inscriptionPosteIntent = InscriptionPosteIntent(sinscrireViewModel: sinscrireVM)
+        let candidatureIntent = CandidatureIntent(candidatureViewModel: candidaterVM)
         
         // TEST TO REMOVE
-        let planningIntent = PlanningIntent(planningViewModel: planningVM)
+        //let planningIntent = PlanningIntent(planningViewModel: planningVM)
         
         VStack{
             HStack{
-                Text("Planning Personnel")
+                Text("Planning inscriptions en attente")
                     .font(.title)
                     .padding(40)
             }
             ScrollView{
                 Text("Samedi")
                     .font(.title3)
-                ForEach(samediInscriptions, id: \.self) { inscription in
+                ForEach(samediCandidatures, id: \.self) { candidature in
                     HStack{
-                        Text("\(inscription.creneauDto.heureDebut) - \(inscription.creneauDto.heureFin)")
+                        Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
                                 .padding(10)
                         Divider()
-                        Text(inscription.espaceDto.libelleEspace)
+                        Text(candidature.espaceDto.libelleEspace)
                         
                         Spacer()
                         Button(action: {
@@ -63,12 +63,12 @@ import SwiftUI
                 Spacer(minLength: 70)
                 Text("Dimanche")
                     .font(.title3)
-                ForEach(dimancheInscriptions, id: \.self) {inscription in
+                ForEach(dimancheCandidatures, id: \.self) {candidature in
                     HStack{
-                        Text("\(inscription.creneauDto.heureDebut) - \(inscription.creneauDto.heureFin)")
+                        Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
                                 .padding(10)
                         Divider()
-                        Text(inscription.espaceDto.libelleEspace)
+                        Text(candidature.espaceDto.libelleEspace)
                         
                         Spacer()
                         Button(action: {
@@ -88,10 +88,10 @@ import SwiftUI
                 // Perform your setup tasks or fetch data here
                 debugPrint("Fetching data...")
                 
-                var result = await inscriptionPosteIntent.getInscriptionsByPseudo(pseudo: pseudo)
+                var result = await candidatureIntent.getCandidaturesByPseudo(pseudo: pseudo)
                 
                 // TEST TO REMOVE
-                var result2 = await planningIntent.getPlanning(idF: 2)
+                //var result2 = await planningIntent.getPlanning(idF: 2)
                 
                 if (result)
                 {
@@ -110,6 +110,7 @@ import SwiftUI
                 }
                 
                 // TEST TO REMOVE
+                /*
                 if (result2)
                 {
                     debugPrint("Planning :")
@@ -152,20 +153,22 @@ import SwiftUI
                 {
                  debugPrint(">:(")
                 }
+                 */
             }
         }
     }
 }
      
 
-
+/*
 struct PlanningCandidatureViewView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel(), pseudo: "blipbloup")
+        PlanningCandidatureView(candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningVM: PlanningViewModel(), pseudo: "blipbloup")
         
     }
      
 }
-     */
+ */
+     
      
 

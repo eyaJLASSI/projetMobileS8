@@ -50,3 +50,9 @@ struct InscriptionPostesSamediView: View {
         }
     }
 }
+
+struct InscriptionPostesSamediView_Previews: PreviewProvider {
+    static var previews: some View {
+        InscriptionPostesSamediView(creneau: "Test Creneau 1")
+    }
+}
