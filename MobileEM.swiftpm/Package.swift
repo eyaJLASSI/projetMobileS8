@@ -19,8 +19,8 @@ let package = Package(
             bundleIdentifier: "polytech.MobileEM",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .beachball),
-            accentColor: .presetColor(.cyan),
+            appIcon: .placeholder(icon: .bunny),
+            accentColor: .presetColor(.purple),
             supportedDeviceFamilies: [
                 .pad,
                 .phone

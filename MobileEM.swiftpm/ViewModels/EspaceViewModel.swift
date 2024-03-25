@@ -15,28 +15,50 @@ class EspaceViewModel : ObservableObject, Hashable, Identifiable {
     
     var observers : [ViewModelObserver] = []
     
-    @Published var idEspace : Int
-    @Published var isAnimation : Bool
-    
-    @Published var libelleEspace : String{
-            didSet{
-                for o in self.observers{
-                    o.viewModelUpdated()
-                }
+    @Published var idEspace : Int {
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
             }
         }
+    }
+    
+    @Published var isAnimation : Bool {
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+    
+    @Published var libelleEspace : String {
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+
+    @Published var posteId : Int {
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
 
     init(EspaceDTO : EspaceDTO){
         self.idEspace = EspaceDTO.idEspace
         self.libelleEspace = EspaceDTO.libelleEspace
         self.isAnimation = EspaceDTO.isAnimation
-
+        self.posteId = EspaceDTO.posteId
     }
     
     init(){
         self.idEspace=0 //A voir l'initialisation, doutes
         self.libelleEspace=""
         self.isAnimation=false
+        self.posteId=0
     }
     
     func hash(into hasher: inout Hasher){

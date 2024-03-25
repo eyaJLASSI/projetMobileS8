@@ -33,7 +33,7 @@ public struct PlanningIntent
             planningViewModel.creneaux = planning!.creneaux
             planningViewModel.inscriptions = planning!.inscriptions
             // Ajouter les inscriptions au view model
-            planningViewModel.state = .loaded(planning!)
+            planningViewModel.state = .loaded
             // mettre à jour le state du view model à loaded
             return true
         case .failure(let failure):

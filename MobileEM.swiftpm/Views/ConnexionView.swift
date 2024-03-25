@@ -78,8 +78,8 @@ struct LoginView: View {
             //ProfileView(benevoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
             
             //Affichage du planning perso
-            PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel(), benevoleVM: viewModel, pseudo: self.username)
-            
+            //PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel(), benevoleVM: viewModel, pseudo: self.username)
+            PlanningInscriptions(selectedDay: "Samedi", pseudo: self.username, planningVM: PlanningViewModel())
             //Affichage du planning inscriptions en attente (pour les flexibles)
             //PlanningCandidatureView(candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), pseudo: self.username)
         }

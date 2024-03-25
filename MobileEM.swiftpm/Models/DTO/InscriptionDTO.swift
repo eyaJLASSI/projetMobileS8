@@ -9,6 +9,7 @@ import Foundation
 
 class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringConvertible {
     
+    let id : Int
     let isAffected: Bool
     let isAccepted: Bool
     let benevolePseudo: String
@@ -22,13 +23,14 @@ class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
     let idF: Int
     
     
-    init(isAffected: Bool, isAccepted: Bool, benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) {
-        self.isAffected = isAffected
-        self.isAccepted = isAccepted
+    init(id: Int, isAffected: Bool, isAccepted: Bool, benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) {
+        self.id             = id
+        self.isAffected     = isAffected
+        self.isAccepted     = isAccepted
         self.benevolePseudo = benevolePseudo
-        self.creneauId = creneauId
-        self.espaceId = espaceId
-        self.idF = idF
+        self.creneauId      = creneauId
+        self.espaceId       = espaceId
+        self.idF            = idF
     }
     
     static func == (lhs: InscriptionDTO, rhs: InscriptionDTO) -> Bool {
@@ -38,7 +40,8 @@ class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
         lhs.benevolePseudo == rhs.benevolePseudo &&
         lhs.creneauId == rhs.creneauId &&
         lhs.espaceId == rhs.espaceId &&
-        lhs.idF == rhs.idF
+        lhs.idF == rhs.idF &&
+        lhs.id == rhs.id
     }
     
     // Implementing Hashable protocol
@@ -50,6 +53,7 @@ class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
         hasher.combine(creneauId)
         hasher.combine(espaceId)
         hasher.combine(idF)
+        hasher.combine(id)
     }
     
     var description: String
@@ -61,6 +65,7 @@ class InscriptionDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
     creneauId      : \(creneauId)
     espaceId       : \(espaceId)
     idF            : \(idF)
+    id             : \(id)
     """
     }
     

@@ -24,6 +24,18 @@ class InscriptionPosteService
         return "users-registrations/\(idF)"
     }
     
+    private func sinscrireUrl(benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) -> String
+    {
+        // Ici on fix le festival en attendant de pouvoir le choisir avec une liste déroulante.
+        return "inscription_v2/\(benevolePseudo)/\(creneauId)/\(espaceId)/\(idF)/"
+    }
+    
+    private func seDesinscrireUrl(idInscription :Int) -> String
+    {
+        // Ici on fix le festival en attendant de pouvoir le choisir avec une liste déroulante.
+        return "inscriptions/\(idInscription)/"
+    }
+    
     // Constructeur
     init()
     {
@@ -171,6 +183,92 @@ class InscriptionPosteService
         catch
         {
             debugPrint("Failed to get all inscriptions. Errors : \(error)")
+            return .failure(InscriptionPosteErrors.failedThrow)
+        }
+    }
+    
+    public func sinscrire(benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) async -> Result<InscriptionDTO, Error>
+    {
+        
+        // Concatener l'host avec l'uri
+        guard let getAllInscriptionsUrl = URL(string: "\(self.api)\(sinscrireUrl(benevolePseudo: benevolePseudo, creneauId: creneauId, espaceId: espaceId, idF: idF))")
+        else
+        {
+            return .failure(InscriptionPosteErrors.failedUrl)
+        }
+        
+        // Creer une requête Post
+        var request = URLRequest(url: getAllInscriptionsUrl)
+        request.httpMethod = "Post"
+        
+        do
+        {
+            // Envoyer la requete, avec en content le json encodé
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let httpresponse = response as! HTTPURLResponse // le bon type
+
+            if (httpresponse.statusCode == 200)
+            {
+                
+                guard let decoded : InscriptionDTO = await JSONHelper.decodeOne(data: data)
+                else
+                {
+                    return .failure(InscriptionPosteErrors.failedDecode)
+                }
+                
+                return .success(decoded)
+            }
+            else
+            {
+                return .failure(InscriptionPosteErrors.failedSinscrire)
+            }
+        }
+        catch
+        {
+            debugPrint("Failed to register user. Errors : \(error)")
+            return .failure(InscriptionPosteErrors.failedThrow)
+        }
+    }
+    
+    public func seDesinscrire(idInscription : Int) async -> Result<Bool, Error>
+    {
+        
+        // Concatener l'host avec l'uri
+        guard let getAllInscriptionsUrl = URL(string: "\(self.api)\(seDesinscrireUrl(idInscription: idInscription))")
+        else
+        {
+            return .failure(InscriptionPosteErrors.failedUrl)
+        }
+        
+        // Creer une requête Post
+        var request = URLRequest(url: getAllInscriptionsUrl)
+        request.httpMethod = "Delete"
+        
+        do
+        {
+            // Envoyer la requete, avec en content le json encodé
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let httpresponse = response as! HTTPURLResponse // le bon type
+
+            
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON brut : \(jsonString)")
+            } else {
+                print("Impossible de convertir les données en chaîne de caractères.")
+            }
+            
+            if (httpresponse.statusCode == 200)
+            {
+                return .success(true)
+            }
+            else
+            {
+                return .failure(InscriptionPosteErrors.failedSeDesinscire)
+            }
+        }
+        catch
+        {
+            debugPrint("Failed to register user. Errors : \(error)")
             return .failure(InscriptionPosteErrors.failedThrow)
         }
     }

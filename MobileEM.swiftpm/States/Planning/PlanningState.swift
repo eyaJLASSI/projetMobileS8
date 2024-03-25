@@ -10,7 +10,7 @@ import SwiftUI
 enum PlanningState : CustomStringConvertible
 {
     case ready
-    case loaded(PlanningDTO)
+    case loaded
     
     // permet de transformer l'objet case en en string
     var description: String
@@ -19,7 +19,7 @@ enum PlanningState : CustomStringConvertible
         {
         case .ready:
             return "inscription ready"
-        case .loaded(_):
+        case .loaded:
             return "Planning loaded!"
         }
     }

@@ -13,7 +13,7 @@ class PosteDTO : Decodable, Encodable, Equatable, Hashable, CustomStringConverti
     var libellePoste : String
     
     init(posteVM : PosteViewModel ){
-        self.idP            = posteVM.idP
+        self.idP          = posteVM.idP
         self.libellePoste = posteVM.libellePoste
 
     }

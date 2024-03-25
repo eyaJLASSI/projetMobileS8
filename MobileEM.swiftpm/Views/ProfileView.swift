@@ -15,9 +15,6 @@ struct ProfileView: View {
     
     @ObservedObject var sinscrireVM : SinscrireViewModel
     
-    // TEST TO REMOVE
-    @ObservedObject var planningVM : PlanningViewModel
-    
     var body: some View {
         NavigationView{
             VStack {
@@ -76,13 +73,13 @@ struct ProfileView: View {
                 HStack {
                     Spacer()
                     
-                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, pseudo: pseudo, sinscrireVM: sinscrireVM, planningVM: planningVM)){
+                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, pseudo: pseudo, sinscrireVM: sinscrireVM)){
                         Image(systemName: "person")
                     }
                     
                     Spacer()
                     
-                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, planningVM: planningVM, benevoleVM: benevoleVM, pseudo: pseudo)){
+                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, benevoleVM: benevoleVM, pseudo: pseudo)){
                         Image(systemName: "calendar")
                     }
                     
@@ -118,7 +115,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         let user = BenevoleViewModel()
-        return ProfileView(benevoleVM: user, pseudo: "blipbloup", sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel())
+        return ProfileView(benevoleVM: user, pseudo: "blipbloup", sinscrireVM: SinscrireViewModel(inscriptionDTOs: []))
     }
 }
 

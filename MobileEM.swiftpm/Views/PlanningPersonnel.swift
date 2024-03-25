@@ -3,10 +3,6 @@ import SwiftUI
 struct PlanningPersonnelView: View {
     @ObservedObject var sinscrireVM : SinscrireViewModel
     //@ObservedObject var candidaterVM : CandidaterViewModel
-
-    
-    // TEST TO REMOVE
-    @ObservedObject var planningVM : PlanningViewModel
     
     let benevoleVM: BenevoleViewModel
     
@@ -27,8 +23,6 @@ struct PlanningPersonnelView: View {
     var body: some View {
         let inscriptionPosteIntent = InscriptionPosteIntent(sinscrireViewModel: sinscrireVM)
         
-        // TEST TO REMOVE
-        let planningIntent = PlanningIntent(planningViewModel: planningVM)
         NavigationView{
             VStack{
                 VStack{
@@ -87,9 +81,6 @@ struct PlanningPersonnelView: View {
                         
                         var result = await inscriptionPosteIntent.getInscriptionsByPseudo(pseudo: pseudo)
                         
-                        // TEST TO REMOVE
-                        var result2 = await planningIntent.getPlanning(idF: 2)
-                        
                         if (result)
                         {
                             //debugPrint("Wihii")
@@ -106,49 +97,6 @@ struct PlanningPersonnelView: View {
                             debugPrint(":c")
                         }
                         
-                        // TEST TO REMOVE
-                        if (result2)
-                        {
-                            debugPrint("Planning :")
-                            for inscription in planningVM.inscriptions
-                            {
-                                debugPrint("=====INSCRIPTIONS=====")
-                                debugPrint(inscription)
-                                debugPrint("=====================")
-                            }
-                            
-                            for poste in planningVM.postes
-                            {
-                                debugPrint("=====POSTES=====")
-                                debugPrint(poste)
-                                debugPrint("=====================")
-                            }
-                            
-                            for creneau in planningVM.creneaux
-                            {
-                                debugPrint("=====CRENEAUX=====")
-                                debugPrint(creneau)
-                                debugPrint("=====================")
-                            }
-                            
-                            for espace in planningVM.espaces
-                            {
-                                debugPrint("=====ESPACES=====")
-                                debugPrint(espace)
-                                debugPrint("=====================")
-                            }
-                            
-                            for nbPlace in planningVM.nombrePlaceTotal
-                            {
-                                debugPrint("=====NB PLACE=====")
-                                debugPrint("\(nbPlace.key) -> \(nbPlace.value)")
-                                debugPrint("=====================")
-                            }
-                        }
-                        else
-                        {
-                            debugPrint(">:(")
-                        }
                     }
                 }
                 
@@ -156,13 +104,13 @@ struct PlanningPersonnelView: View {
                 HStack {
                     Spacer()
                     
-                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, pseudo: pseudo, sinscrireVM: sinscrireVM, planningVM: planningVM)){
+                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, pseudo: pseudo, sinscrireVM: sinscrireVM)){
                         Image(systemName: "person")
                     }
                     
                     Spacer()
                     
-                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, planningVM: planningVM, benevoleVM: benevoleVM, pseudo: pseudo)){
+                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, benevoleVM: benevoleVM, pseudo: pseudo)){
                         Image(systemName: "calendar")
                     }
                     
@@ -198,6 +146,6 @@ struct PlanningPersonnelView: View {
 
 struct PlanningPersonnelView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel(), benevoleVM: BenevoleViewModel(), pseudo: "blipbloup")
+        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), benevoleVM: BenevoleViewModel(), pseudo: "blipbloup")
     }
 }
