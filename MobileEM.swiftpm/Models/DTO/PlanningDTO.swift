@@ -11,12 +11,14 @@ class PlanningDTO : CustomStringConvertible
 {
     init(
         creneaux         : [CreneauDTO],
+        candidatures     : [CandidatureDTO],
         espaces          : [EspaceDTO],
         inscriptions     : [InscriptionDTO],
         postes           : [PosteDTO],
         nombrePlaceTotal : [Two<Int, Int>: Int]
     ) {
         self.inscriptions     = inscriptions
+        self.candidatures     = candidatures
         self.creneaux         = creneaux
         self.espaces          = espaces
         self.postes           = postes
@@ -25,6 +27,7 @@ class PlanningDTO : CustomStringConvertible
     
     var creneaux         : [CreneauDTO]
     var espaces          : [EspaceDTO]
+    var candidatures     : [CandidatureDTO]
     var inscriptions     : [InscriptionDTO]
     var postes           : [PosteDTO]
     var nombrePlaceTotal : [Two<Int, Int>: Int]
@@ -34,6 +37,8 @@ class PlanningDTO : CustomStringConvertible
         return """
     - Creneaux         :
     \(creneaux)
+    - Candidatures     :
+    \(candidatures)
     - Espaces          :
     \(espaces)
     - Inscriptions     :

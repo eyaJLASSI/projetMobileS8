@@ -12,6 +12,7 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
     static func == (lhs: PlanningViewModel, rhs: PlanningViewModel) -> Bool {
         return
         lhs.inscriptions == rhs.inscriptions &&
+        lhs.candidatures == rhs.candidatures &&
         lhs.postes == rhs.postes &&
         lhs.espaces == rhs.espaces &&
         lhs.creneaux == rhs.creneaux &&
@@ -53,6 +54,14 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
         }
     }
     
+    @Published var candidatures : [CandidatureDTO]{
+        didSet{
+            for o in self.observers{
+                o.viewModelUpdated()
+            }
+        }
+    }
+    
     @Published var nombrePlaceTotal : [Two<Int, Int>:Int]{
         didSet{
             for o in self.observers{
@@ -63,12 +72,14 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
 
     init(
         creneaux         : [CreneauDTO],
+        candidatures     : [CandidatureDTO],
         espaces          : [EspaceDTO],
         inscriptions     : [InscriptionDTO],
         postes           : [PosteDTO],
         nombrePlaceTotal : [Two<Int, Int>: Int]
     ) {
         self.inscriptions     = inscriptions
+        self.candidatures     = candidatures
         self.creneaux         = creneaux
         self.espaces          = espaces
         self.postes           = postes
@@ -79,6 +90,7 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
         plannning         : PlanningDTO
     ) {
         self.inscriptions     = plannning.inscriptions
+        self.candidatures     = plannning.candidatures
         self.creneaux         = plannning.creneaux
         self.espaces          = plannning.espaces
         self.postes           = plannning.postes
@@ -87,6 +99,7 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
     
     init(){
         self.nombrePlaceTotal = [:]
+        self.candidatures = []
         self.inscriptions = []
         self.creneaux = []
         self.espaces = []
@@ -95,6 +108,7 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
     
     func hash(into hasher: inout Hasher){
         hasher.combine(self.inscriptions)
+        hasher.combine(self.candidatures)
         hasher.combine(self.postes)
         hasher.combine(self.creneaux)
         hasher.combine(self.espaces)

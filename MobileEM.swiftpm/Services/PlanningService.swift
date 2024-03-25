@@ -33,15 +33,17 @@ class PlanningService {
     
     public func getPlanning(idF: Int) async -> Result<PlanningDTO?, Error>
     {
-        var creneauService      = CreneauService()
-        var espaceService       = EspaceService()
-        var posteService        = PosteService()
-        var inscriptionsService = InscriptionPosteService()
+        let creneauService      = CreneauService()
+        let espaceService       = EspaceService()
+        let posteService        = PosteService()
+        let inscriptionsService = InscriptionPosteService()
+        let candidaterService   = CandidatureService()
         
-        var creneauxResult     = await creneauService.getAllCreneaux(idF: idF)
-        var espacesResult      = await espaceService.getAllEspaces(idF: idF)
-        var postesResult       = await posteService.getAllPostes(idF: idF)
-        var inscriptionsResult = await inscriptionsService.getAllInscriptions(idF: idF)
+        let creneauxResult     = await creneauService.getAllCreneaux(idF: idF)
+        let espacesResult      = await espaceService.getAllEspaces(idF: idF)
+        let postesResult       = await posteService.getAllPostes(idF: idF)
+        let inscriptionsResult = await inscriptionsService.getAllInscriptions(idF: idF)
+        let candidaterResult   = await candidaterService.getAllCandidatures(idF: idF)
         
         if case let .failure(error) = creneauxResult {
             debugPrint(error)
@@ -63,13 +65,20 @@ class PlanningService {
             return .failure(InscriptionPosteErrors.failedGetAllInscritption)
         }
         
+        if case let .failure(error) = candidaterResult {
+            debugPrint(error)
+            return .failure(InscriptionPosteErrors.failedGetAllInscritption)
+        }
+        
         
         var nombrePlaceTotal : [Two<Int, Int>: Int] = [:]
         
         guard case let .success(foundCreneaux) = creneauxResult,
               case let .success(foundEspaces) = espacesResult,
               case let .success(foundPostes) = postesResult,
-              case let .success(foundInscriptions) = inscriptionsResult else {
+              case let .success(foundInscriptions) = inscriptionsResult,
+              case let .success(foundCandidatures) = candidaterResult
+        else {
             // Gérer les échecs des résultats
             return .failure(PlanningError.failedCreate)
         }
@@ -83,7 +92,7 @@ class PlanningService {
             }
         }
 
-        return .success(PlanningDTO(creneaux: foundCreneaux, espaces: foundEspaces, inscriptions: foundInscriptions, postes: foundPostes, nombrePlaceTotal: nombrePlaceTotal))
+        return .success(PlanningDTO(creneaux: foundCreneaux, candidatures: foundCandidatures, espaces: foundEspaces, inscriptions: foundInscriptions, postes: foundPostes, nombrePlaceTotal: nombrePlaceTotal))
     }
     
     public func getNombrePlaceByCreneauAndEspace(creneauId: Int, espaceId: Int) async -> Int

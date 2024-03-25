@@ -11,6 +11,7 @@ enum InscriptionPosteErrors : Error, CustomStringConvertible{
     case failedUrl
     case failedGetInscritption
     case failedGetAllInscritption
+    case failedGetAllCandidatures
     case failedSinscrire
     case failedSeDesinscire
     case failedDecode
@@ -22,6 +23,8 @@ enum InscriptionPosteErrors : Error, CustomStringConvertible{
         {
         case .failedUrl:
             return "Failed to create url"
+        case .failedGetAllCandidatures:
+            return "Failed to fet all candidatures"
         case .failedGetInscritption:
             return "Failed to get inscriptions"
         case .failedGetAllInscritption:

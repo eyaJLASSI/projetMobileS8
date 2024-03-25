@@ -9,7 +9,9 @@ import Foundation
 
 enum CandidatureErrors : Error, CustomStringConvertible{
     case failedUrl
+    case failedCandidater
     case failedGetCandidature
+    case failedRemoveCandidature
     case failedGetAllCandidature
     case failedDecode
     case failedThrow
@@ -20,6 +22,8 @@ enum CandidatureErrors : Error, CustomStringConvertible{
         {
         case .failedUrl:
             return "Failed to create url"
+        case .failedCandidater:
+            return "Failed to register as flexible"
         case .failedGetCandidature:
             return "Failed to get candidature"
         case .failedGetAllCandidature:
@@ -28,6 +32,8 @@ enum CandidatureErrors : Error, CustomStringConvertible{
             return "Failed to decode candidature"
         case .failedThrow:
             return "Failed to get candidature, method throwed"
+        case .failedRemoveCandidature:
+            return "Failed to remove candidature"
         }
     }
 }

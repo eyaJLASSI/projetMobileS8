@@ -24,6 +24,18 @@ class CandidatureService
         return "candidatures/\(idF)"
     }
     
+    private func candidaterUrl(pseudo: String, creneauId: Int, idF: Int) -> String
+    {
+        // Ici on fixe le festival en attendant de pouvoir le choisir avec une liste déroulante.
+        return "candidature_V2/\(pseudo)/\(creneauId)/\(idF)"
+    }
+    
+    private func decandidaterUrl(idCandidature : Int) -> String
+    {
+        // Ici on fixe le festival en attendant de pouvoir le choisir avec une liste déroulante.
+        return "candidature/\(idCandidature)/"
+    }
+    
     // Constructeur
     init()
     {
@@ -162,6 +174,87 @@ class CandidatureService
                 }
                 
                 return .success(decoded)
+            }
+            else
+            {
+                return .failure(CandidatureErrors.failedGetCandidature)
+            }
+        }
+        catch
+        {
+            debugPrint("Failed to get all candidatures. Errors : \(error)")
+            return .failure(CandidatureErrors.failedThrow)
+        }
+    }
+    
+    public func candidater(pseudo: String, creneauId: Int, idF: Int) async -> Result<[CandidatureDTO], Error>
+    {
+        
+        // Concatener l'host avec l'uri
+        guard let candidaterUrl = URL(string: "\(self.api)\(candidaterUrl(pseudo: pseudo, creneauId: creneauId, idF: idF))")
+        else
+        {
+            return .failure(CandidatureErrors.failedUrl)
+        }
+        
+        // Creer une requête Post
+        var request = URLRequest(url: candidaterUrl)
+        request.httpMethod = "Post"
+        
+        do
+        {
+            // Envoyer la requete, avec en content le json encodé
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let httpresponse = response as! HTTPURLResponse // le bon type
+
+            
+            if (httpresponse.statusCode == 200)
+            {
+                
+                guard let decoded : [CandidatureDTO] = await JSONHelper.decodeOne(data: data)
+                else
+                {
+                    return .failure(CandidatureErrors.failedDecode)
+                }
+                
+                return .success(decoded)
+            }
+            else
+            {
+                return .failure(CandidatureErrors.failedGetCandidature)
+            }
+        }
+        catch
+        {
+            debugPrint("Failed to get all candidatures. Errors : \(error)")
+            return .failure(CandidatureErrors.failedThrow)
+        }
+    }
+    
+    public func decandidater(idCandidature : Int) async -> Result<Bool, Error>
+    {
+        
+        // Concatener l'host avec l'uri
+        guard let decandidaterUrl = URL(string: "\(self.api)\(decandidaterUrl(idCandidature: idCandidature))")
+        else
+        {
+            return .failure(CandidatureErrors.failedUrl)
+        }
+        
+        // Creer une requête Post
+        var request = URLRequest(url: decandidaterUrl)
+        request.httpMethod = "Delete"
+        
+        do
+        {
+            // Envoyer la requete, avec en content le json encodé
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let httpresponse = response as! HTTPURLResponse // le bon type
+            
+            if (httpresponse.statusCode == 200)
+            {
+                
+                return .success(true)
             }
             else
             {

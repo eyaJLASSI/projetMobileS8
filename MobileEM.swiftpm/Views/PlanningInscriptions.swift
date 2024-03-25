@@ -68,10 +68,36 @@ struct PlanningInscriptions: View {
     
     func inscriptionExist(pseudo: String, idCreneau : Int, idEspace : Int, idF: Int) -> Bool
     {
-        var inscriptionOrNil : InscriptionDTO? = planningVM.inscriptions
-            .first { $0.creneauId == idCreneau && $0.espaceId == idEspace && $0.benevolePseudo == pseudo && $0.idF == idF}
+        var inscriptionOrNil = getInscription(pseudo: pseudo, idCreneau : idCreneau, idEspace : idEspace, idF: idF)
         
         guard let _ = inscriptionOrNil
+        else
+        {
+            return false
+        }
+        return true
+    }
+    
+    func getCandidature(pseudo: String, idCreneau : Int, idF: Int) -> CandidatureDTO?
+    {
+        var candidatureOrNil : CandidatureDTO? = planningVM.candidatures
+            .first { $0.idF == idF && $0.creneauId == idCreneau && $0.benevolePseudo == pseudo }
+        
+        guard let candidature = candidatureOrNil
+        else
+        {
+            return nil
+        }
+        
+        debugPrint("Found Candidature \(candidature)")
+        return candidature
+    }
+    
+    func candidatureExist(pseudo: String, idCreneau : Int, idF: Int) -> Bool
+    {
+        var candidatureOrNil = getCandidature(pseudo: pseudo, idCreneau : idCreneau, idF: idF)
+        
+        guard let _ = candidatureOrNil
         else
         {
             return false
@@ -112,11 +138,26 @@ struct PlanningInscriptions: View {
                     .frame(width: 100, height: 100)
                     .background(Color.white)
                 ForEach(creneaux, id: \.self) { creneau in
-                    Text("\(creneau.heureDebut) - \(creneau.heureFin)")
-                        .frame(width: 100, height: 100)
-                        .background(Color.gray)
-                        .border(Color.black)
-
+                    Button(action: {
+                        Task {
+                            if (!candidatureExist(pseudo: pseudo, idCreneau: creneau.idC, idF: 2))
+                            {
+                                debugPrint("Will create candidature")
+                                await inscriptionIntent.candidater(pseudo: pseudo, creneauId: creneau.idC, idF: 2)
+                            }
+                            else {
+                                
+                                var candidature = getCandidature(pseudo: pseudo, idCreneau: creneau.idC, idF: 2)
+                                debugPrint("Delete candidature \(candidature!.id)")
+                                await inscriptionIntent.decandidater(idCandidature: candidature!.id)
+                            }
+                        }
+                    }) {
+                        Text("\(creneau.heureDebut) - \(creneau.heureFin)")
+                            .frame(width: 100, height: 100)
+                            .background(Color.gray)
+                            .border(Color.black)
+                    }
                 }
             }
             ForEach(espaces, id: \.self) { espace in
@@ -128,6 +169,11 @@ struct PlanningInscriptions: View {
                     ForEach(creneaux, id: \.self) { creneau in
                         Button(action: {
                             Task {
+                                if (candidatureExist(pseudo: pseudo, idCreneau: creneau.idC, idF: 2))
+                                {
+                                    return;
+                                }
+                                
                                 if(inscriptionExist(pseudo: pseudo, idCreneau: creneau.idC, idEspace: espace.idEspace, idF: 2))
                                 {
                                     let inscription = getInscription(pseudo: pseudo, idCreneau: creneau.idC, idEspace: espace.idEspace, idF: 2)
@@ -144,7 +190,7 @@ struct PlanningInscriptions: View {
                         }) {
                             Text("\(GetNbPlace(idCreneau: creneau.idC, idEspace: espace.idEspace))")
                                 .frame(width: 100, height: 100)
-                                .background(inscriptionExist(pseudo: pseudo, idCreneau: creneau.idC, idEspace: espace.idEspace, idF: 2) ? Color(red: 0.3, green: 0.3, blue: 0.5, opacity: 0.1) : Color.white)
+                                .background(inscriptionExist(pseudo: pseudo, idCreneau: creneau.idC, idEspace: espace.idEspace, idF: 2) ? Color(red: 0.3, green: 0.3, blue: 0.5, opacity: 0.1) : candidatureExist(pseudo: pseudo, idCreneau: creneau.idC, idF: 2) ? Color(red: 0.0, green: 0.3, blue: 0.81, opacity: 0.3) : Color.white)
                                 .border(Color.black)
                         }
                     }
@@ -193,6 +239,13 @@ struct PlanningInscriptions: View {
                     //     debugPrint("\(nbPlace.key) -> \(nbPlace.value)")
                     //     debugPrint("=====================")
                     // }
+                    
+                    for candidature in planningVM.candidatures
+                    {
+                        debugPrint("=====CANDIDATURES=====")
+                        debugPrint("\(candidature)")
+                        debugPrint("=====================")
+                    }
                 }
                 else
                 {

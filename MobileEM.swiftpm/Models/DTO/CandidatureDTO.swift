@@ -9,6 +9,7 @@ import Foundation
 
 class CandidatureDTO : Decodable, Encodable, Equatable, Hashable, CustomStringConvertible {
     
+    let id : Int
     let isAffected: Bool
     let isAccepted: Bool
     let benevolePseudo: String
@@ -22,7 +23,8 @@ class CandidatureDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
     let idF: Int
     
     
-    init(isAffected: Bool, isAccepted: Bool, benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) {
+    init(id:Int, isAffected: Bool, isAccepted: Bool, benevolePseudo: String, creneauId: Int, espaceId: Int, idF: Int) {
+        self.id = id
         self.isAffected = isAffected
         self.isAccepted = isAccepted
         self.benevolePseudo = benevolePseudo
@@ -33,6 +35,7 @@ class CandidatureDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
     
     static func == (lhs: CandidatureDTO, rhs: CandidatureDTO) -> Bool {
         return
+        lhs.id == rhs.id &&
         lhs.isAffected == rhs.isAffected &&
         lhs.isAccepted == rhs.isAccepted &&
         lhs.benevolePseudo == rhs.benevolePseudo &&
@@ -50,11 +53,13 @@ class CandidatureDTO : Decodable, Encodable, Equatable, Hashable, CustomStringCo
         hasher.combine(creneauId)
         hasher.combine(espaceId)
         hasher.combine(idF)
+        hasher.combine(id)
     }
     
     var description: String
     {
         return """
+    id             : \(id)
     isAffected     : \(isAffected)
     isAccepted     : \(isAccepted)
     benevolePseudo : \(benevolePseudo)

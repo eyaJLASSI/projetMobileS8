@@ -54,4 +54,45 @@ public struct SinscrireIntent
             return false
         }
     }
+    
+    func candidater(pseudo : String, creneauId : Int, idF: Int) async -> Bool
+    {
+        let candidaterService = CandidatureService()
+        
+        let result = await candidaterService.candidater(pseudo: pseudo, creneauId: creneauId, idF: idF)
+        
+        switch (result)
+        {
+        case .success(let candidatures):
+            for candidature in candidatures
+            {
+                planningViewModel.candidatures.append(candidature)
+            }
+            planningViewModel.state = .loaded
+            // mettre à jour le state du view model à loaded
+            return true
+        case .failure(let failure):
+            debugPrint(failure)
+            return false
+        }
+    }
+    
+    func decandidater(idCandidature : Int) async -> Bool
+    {
+        let candidaterService = CandidatureService()
+        
+        let result = await candidaterService.decandidater(idCandidature: idCandidature)
+        
+        switch (result)
+        {
+        case .success(_):
+            planningViewModel.candidatures.removeAll { $0.id == idCandidature }
+            planningViewModel.state = .loaded
+            // mettre à jour le state du view model à loaded
+            return true
+        case .failure(let failure):
+            debugPrint(failure)
+            return false
+        }
+    }
 }
