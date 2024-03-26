@@ -206,7 +206,12 @@ class CandidatureService
             // Envoyer la requete, avec en content le json encodé
             let (data, response) = try await URLSession.shared.data(for: request)
             let httpresponse = response as! HTTPURLResponse // le bon type
-
+            
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON brut : \(jsonString)")
+            } else {
+                print("Impossible de convertir les données en chaîne de caractères.")
+            }
             
             if (httpresponse.statusCode == 200)
             {

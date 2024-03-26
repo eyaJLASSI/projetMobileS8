@@ -144,6 +144,8 @@ class BenevoleViewModel : ObservableObject, Hashable, Identifiable {
                 case .authFailed(let error):
                     debugPrint(("view model : authentification failed"))
                     self.authFailedMessage = "\(error)"
+                case .updated:
+                    debugPrint("Benevole updated")
             }
         }
     }

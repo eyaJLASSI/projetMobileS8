@@ -9,7 +9,9 @@ import SwiftUI
 
 
 struct ProfileView: View {
-    let benevoleVM: BenevoleViewModel
+    @ObservedObject var benevoleVM: BenevoleViewModel
+    
+    @State private var modeModif : Bool = false
     
     //Variables pour la navigation vers PlanningPersonnel
     @ObservedObject var sinscrireVM : SinscrireViewModel
@@ -24,20 +26,59 @@ struct ProfileView: View {
     @ObservedObject var planningVM : PlanningViewModel
     
     var body: some View {
-        NavigationView{
+        let benevoleIntent = BenevoleIntent(benevole: benevoleVM)
+        
+        ScrollView {
             VStack {
                 Text("Profil de \(benevoleVM.pseudo)")
                     .font(.title)
                     .padding(40)
                 
-                VStack(alignment: .leading){
+                if modeModif {
+                    TextField("Nom", text: $benevoleVM.nom)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .padding([.top, .leading, .trailing])
                     
+                    TextField("Prénom", text: $benevoleVM.prenom)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                    
+                    TextField("Email", text: $benevoleVM.email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                    
+                    TextField("Numéro de tel", text: $benevoleVM.numTel)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                    
+                    TextField("Taille du tee shirt", text: $benevoleVM.taille)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .padding()
+                    
+                    Text("Végétarien ?")
+                        .font(.headline)
+                        .padding(.bottom, 4)
+                    
+                    
+                    Toggle("Végétarien", isOn: $benevoleVM.vegetarien)
+                    
+                    Text("Besoin d'un logement ?")
+                        .font(.headline)
+                        .padding(.bottom, 4)
+                    
+                    
+                    Toggle("Cherche logement", isOn: $benevoleVM.chercheLogement)
+                    
+                    
+                } else {
                     Text("Nom : \(benevoleVM.nom)")
                         .padding(10)
                     
                     Text("Prénom : \(benevoleVM.prenom)")
                         .padding(10)
-                   
+                    
                     Text("Email : \(benevoleVM.email)")
                         .padding(10)
                     
@@ -50,33 +91,36 @@ struct ProfileView: View {
                     Text("Taille du t-shirt : \(benevoleVM.taille)")
                         .padding(10)
                     
-                    if(benevoleVM.vegetarien == true){
-                        Text("Végétarien : Oui")
-                            .padding(10)
-                    } else {
-                        Text("Végétarien : Non")
-                            .padding(10)
-                    }
+                    Text("Végétarien : \(benevoleVM.vegetarien ? "Oui" : "Non")")
                     
-                    if(benevoleVM.chercheLogement == true){
-                        Text("Besoin d'un logement : Oui")
-                            .padding(10)
-                    } else {
-                        Text("Besoin d'un logement : Non")
-                            .padding(10)
-                    }
+                    Text("Besoin d'un logement : \(benevoleVM.chercheLogement ? "Oui" : "Non")")
+                        .padding(10)
+                    
                 }
+                
                 Spacer()
                 // Remplacer le bouton par une NavigationLink
                 Button(action: {
-                    print("modification")
+                    Task {
+                        if (modeModif)
+                        {
+                            let benevole = BenevoleModifDTO(benevoleVM: benevoleVM)
+                            await benevoleIntent.updateBenevole(pseudo: benevoleVM.pseudo, updatedBenevole: benevole)
+                            modeModif = false
+                        }
+                        else
+                        {
+                            modeModif = true
+                        }
+                    }
                 }, label: {
-                    Text("Modifier Profil")
+                    Text(self.modeModif ? "Valider" : "Modifier Profil")
                         .padding()
                         .background(Color.green)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                 })
+                
                 Spacer()
                 HStack {
                     Spacer()

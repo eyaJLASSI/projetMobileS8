@@ -20,7 +20,9 @@ class EnvironmentHelper {
     
     // Donne l'url de l'api
     static func getApi() -> String? {
-        if let api = EnvironmentHelper.getEnvironmentValue(forKey: "api_back")
+        var apiBack = IsLocal() ? "api_back_local" : "api_back"
+        
+        if let api = EnvironmentHelper.getEnvironmentValue(forKey: apiBack)
         {
             return api
         }
@@ -29,6 +31,17 @@ class EnvironmentHelper {
             // Ici on pourrait arrêter l'execution de l'app, si on a pas d'url, ça sert à rien de continuer.
             debugPrint("FAILED TO GET API URL")
             return nil
+        }
+    }
+    
+    private static func IsLocal() -> Bool {
+        if let isLocal : String = EnvironmentHelper.getEnvironmentValue(forKey: "local")
+        {
+            return isLocal == "1"
+        }
+        else
+        {
+            return false
         }
     }
 }

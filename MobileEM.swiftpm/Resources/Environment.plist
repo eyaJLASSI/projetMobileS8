@@ -4,5 +4,9 @@
 <dict>
 	<key>api_back</key>
 	<string>https://festival-jeu-mtp-419077cc35e8.herokuapp.com/</string>
+	<key>api_back_local</key>
+	<string>http://192.168.1.54:3000/</string>
+	<key>local</key>
+	<string>0</string>
 </dict>
 </plist>

@@ -71,7 +71,7 @@ class BenevoleService {
         }
     }
     
-    public func updateBenevole(pseudo: String, updatedBenevole: BenevoleDTO) async -> Result<Void, Error> {
+    public func updateBenevole(pseudo: String, updatedBenevole: BenevoleModifDTO) async -> Result<Void, Error> {
             // Concatener l'host avec l'uri
             guard let updateBenevoleURL = URL(string: "\(self.api)\(self.updateBenevoleUrl(pseudo: pseudo))") else {
                 return .failure(BenevoleErrors.failedUrl)
@@ -80,20 +80,30 @@ class BenevoleService {
             // Créer une requête PUT
             var putRequest = URLRequest(url: updateBenevoleURL)
             putRequest.httpMethod = "Put"
-            
+            // permet de préciser le type du contenu envoyé
+            putRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             // Encoder les données du profil mis à jour en JSON et les ajouter à la requête
             do {
                 let encoder = JSONEncoder()
-                putRequest.httpBody = try encoder.encode(updatedBenevole)
+                let json = try encoder.encode(updatedBenevole)
+                if let jsonString = String(data: json, encoding: .utf8) {
+                    debugPrint("Json envoyé : \(jsonString)")
+                }
+                putRequest.httpBody = json
             } catch {
                 return .failure(BenevoleErrors.failedEncode)
             }
+        
             
             // Envoyer la requête PUT
             do {
-                let (_, response) = try await URLSession.shared.data(for: putRequest)
+                let (data, response) = try await URLSession.shared.data(for: putRequest)
                 let httpResponse = response as! HTTPURLResponse // le bon type
-
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("JSON recu brut : \(jsonString)")
+                } else {
+                    print("Impossible de convertir les données en chaîne de caractères.")
+                }
                 if (httpResponse.statusCode == 200) {
                     return .success(())
                 } else {
