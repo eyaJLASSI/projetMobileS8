@@ -32,6 +32,7 @@ public struct PlanningIntent
             planningViewModel.espaces = planning!.espaces
             planningViewModel.creneaux = planning!.creneaux
             planningViewModel.inscriptions = planning!.inscriptions
+            planningViewModel.candidatures = planning!.candidatures
             // Ajouter les inscriptions au view model
             planningViewModel.state = .loaded
             // mettre à jour le state du view model à loaded

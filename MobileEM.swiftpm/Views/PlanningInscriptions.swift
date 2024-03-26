@@ -100,6 +100,14 @@ struct PlanningInscriptions: View {
         return candidature
     }
     
+    
+    func getCandidatures(pseudo: String, idCreneau : Int, idF: Int) -> [CandidatureDTO]
+    {
+        return planningVM.candidatures
+            .filter { $0.idF == idF && $0.creneauId == idCreneau && $0.benevolePseudo == pseudo }
+    }
+    
+    
     func candidatureExist(pseudo: String, idCreneau : Int, idF: Int) -> Bool
     {
         var candidatureOrNil = getCandidature(pseudo: pseudo, idCreneau : idCreneau, idF: idF)
@@ -157,9 +165,13 @@ struct PlanningInscriptions: View {
                                         }
                                         else {
                                             
-                                            var candidature = getCandidature(pseudo: pseudo, idCreneau: creneau.idC, idF: 2)
-                                            debugPrint("Delete candidature \(candidature!.id)")
-                                            await inscriptionIntent.decandidater(idCandidature: candidature!.id)
+                                            var candidatures = getCandidatures(pseudo: pseudo, idCreneau: creneau.idC, idF: 2)
+                                            
+                                            for candidature in candidatures
+                                            {
+                                                debugPrint("Delete candidature \(candidature.id)")
+                                                await inscriptionIntent.decandidater(idCandidature: candidature.id)
+                                            }
                                         }
                                     }
                                 }) {

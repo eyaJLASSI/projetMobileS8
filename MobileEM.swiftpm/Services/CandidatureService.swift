@@ -190,6 +190,7 @@ class CandidatureService
     public func candidater(pseudo: String, creneauId: Int, idF: Int) async -> Result<[CandidatureDTO], Error>
     {
         
+        debugPrint("============Service candidater")
         // Concatener l'host avec l'uri
         guard let candidaterUrl = URL(string: "\(self.api)\(candidaterUrl(pseudo: pseudo, creneauId: creneauId, idF: idF))")
         else
@@ -238,7 +239,7 @@ class CandidatureService
     
     public func decandidater(idCandidature : Int) async -> Result<Bool, Error>
     {
-        
+        debugPrint("=============Service decandidater")
         // Concatener l'host avec l'uri
         guard let decandidaterUrl = URL(string: "\(self.api)\(decandidaterUrl(idCandidature: idCandidature))")
         else

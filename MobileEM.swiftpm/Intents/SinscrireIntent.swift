@@ -86,7 +86,7 @@ public struct SinscrireIntent
         switch (result)
         {
         case .success(_):
-            planningViewModel.candidatures.removeAll { $0.id == idCandidature }
+            planningViewModel.candidatures = planningViewModel.candidatures.filter { $0.id != idCandidature }
             planningViewModel.state = .loaded
             // mettre à jour le state du view model à loaded
             return true
