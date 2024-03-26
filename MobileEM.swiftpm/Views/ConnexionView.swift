@@ -75,11 +75,15 @@ struct LoginView: View {
             InscriptionView2(benevoleVM: BenevoleViewModel()) // Afficher InscriptionView lorsque isShowingInscriptionView est vrai
         }
         .fullScreenCover(isPresented: $isLoggedIn) {
+            //Affichage du profil
             //ProfileView(benevoleVM: viewModel) // Afficher ProfilView lorsque isLoggedIn est vrai
             
             //Affichage du planning perso
-            //PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), planningVM: PlanningViewModel(), benevoleVM: viewModel, pseudo: self.username)
-            PlanningInscriptions(selectedDay: "Samedi", pseudo: self.username, planningVM: PlanningViewModel())
+            //PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), benevoleVM: viewModel, candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), selectedDay: "Samedi", pseudo: self.username, planningVM: PlanningViewModel())
+            
+            //Affichage du planning d'inscription
+            PlanningInscriptions(selectedDay: "Samedi", pseudo: self.username, planningVM: PlanningViewModel(), benevoleVM: viewModel, sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel())
+            
             //Affichage du planning inscriptions en attente (pour les flexibles)
             //PlanningCandidatureView(candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), pseudo: self.username)
         }
