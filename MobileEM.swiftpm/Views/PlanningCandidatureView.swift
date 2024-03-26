@@ -13,7 +13,16 @@ struct PlanningCandidatureView: View {
     //TEST TO REMOVE
     @ObservedObject var planningCandVM : PlanningCandidatureViewModel
     
+    //Variables pour la navigation vers ProfileView
+    let benevoleVM: BenevoleViewModel
+    
+    //Variables pour la navigation vers PlanningPersonnel
+    @ObservedObject var sinscrireVM : SinscrireViewModel
+    
+    //Variables pour la navigation vers PlanningInscriptions
+    @State var selectedDay : String
     let pseudo : String
+    @ObservedObject var planningVM : PlanningViewModel
     
     
     var samediCandidatures: [CandidatureWithAllInfosDTO] {
@@ -29,133 +38,170 @@ struct PlanningCandidatureView: View {
     }
     
     var body: some View {
-        let candidatureIntent = CandidatureIntent(candidatureViewModel: candidaterVM)
-        
-        // TEST TO REMOVE
-        //let planningIntent = PlanningIntent(planningViewModel: planningVM)
-        
-        VStack{
-            HStack{
-                Text("Planning inscriptions en attente")
-                    .font(.title)
-                    .padding(40)
-            }
-            ScrollView{
-                Text("Samedi")
-                    .font(.title3)
-                ForEach(samediCandidatures, id: \.self) { candidature in
-                    HStack{
-                        Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
-                                .padding(10)
-                        Divider()
-                        Text(candidature.espaceDto.libelleEspace)
-                        
-                        Spacer()
-                        Button(action: {
-                            print("Supprime")
-                        }){
-                            Image(systemName: "trash")
-                        }
-                        .padding(10)
-                    }
-                    Divider()
-                }
-                Spacer(minLength: 70)
-                Text("Dimanche")
-                    .font(.title3)
-                ForEach(dimancheCandidatures, id: \.self) {candidature in
-                    HStack{
-                        Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
-                                .padding(10)
-                        Divider()
-                        Text(candidature.espaceDto.libelleEspace)
-                        
-                        Spacer()
-                        Button(action: {
-                            print("Supprime")
-                        }){
-                            Image(systemName: "trash")
-                        }
-                        .padding(10)
-                    }
-                    Divider()
-                }
-            }
-        }
-        .onAppear {
-            // Call your function here
-            Task {
-                // Perform your setup tasks or fetch data here
-                debugPrint("Fetching data...")
-                
-                var result = await candidatureIntent.getCandidaturesByPseudo(pseudo: pseudo)
+        NavigationView{
+            VStack{
+                let candidatureIntent = CandidatureIntent(candidatureViewModel: candidaterVM)
                 
                 // TEST TO REMOVE
-                //var result2 = await planningIntent.getPlanning(idF: 2)
+                //let planningIntent = PlanningIntent(planningViewModel: planningVM)
                 
-                if (result)
-                {
-                    //debugPrint("Wihii")
-                    //debugPrint(sinscrireVM.inscriptions.count)
-                    //for inscription in sinscrireVM.inscriptions
-                    //{
-                    //    debugPrint("=====================")
-                    //    debugPrint(inscription)
-                    //    debugPrint("=====================")
-                    //}
+                VStack{
+                    HStack{
+                        Text("Planning inscriptions en attente")
+                            .font(.title)
+                            .padding(40)
+                    }
+                    ScrollView{
+                        Text("Samedi")
+                            .font(.title3)
+                        ForEach(samediCandidatures, id: \.self) { candidature in
+                            HStack{
+                                Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
+                                    .padding(10)
+                                Divider()
+                                Text(candidature.espaceDto.libelleEspace)
+                                
+                                Spacer()
+                            }
+                            Divider()
+                        }
+                        Spacer(minLength: 70)
+                        Text("Dimanche")
+                            .font(.title3)
+                        ForEach(dimancheCandidatures, id: \.self) {candidature in
+                            HStack{
+                                Text("\(candidature.creneauDto.heureDebut) - \(candidature.creneauDto.heureFin)")
+                                    .padding(10)
+                                Divider()
+                                Text(candidature.espaceDto.libelleEspace)
+                                
+                                Spacer()
+                                Button(action: {
+                                    print("Supprime")
+                                }){
+                                    Image(systemName: "trash")
+                                }
+                                .padding(10)
+                            }
+                            Divider()
+                        }
+                    }
                 }
-                else
-                {
-                    debugPrint(":c")
+                .onAppear {
+                    // Call your function here
+                    Task {
+                        // Perform your setup tasks or fetch data here
+                        debugPrint("Fetching data...")
+                        
+                        var result = await candidatureIntent.getCandidaturesByPseudo(pseudo: pseudo)
+                        
+                        // TEST TO REMOVE
+                        //var result2 = await planningIntent.getPlanning(idF: 2)
+                        
+                        if (result)
+                        {
+                            //debugPrint("Wihii")
+                            //debugPrint(sinscrireVM.inscriptions.count)
+                            //for inscription in sinscrireVM.inscriptions
+                            //{
+                            //    debugPrint("=====================")
+                            //    debugPrint(inscription)
+                            //    debugPrint("=====================")
+                            //}
+                        }
+                        else
+                        {
+                            debugPrint(":c")
+                        }
+                        
+                        // TEST TO REMOVE
+                        /*
+                         if (result2)
+                         {
+                         debugPrint("Planning :")
+                         for inscription in planningVM.inscriptions
+                         {
+                         debugPrint("=====INSCRIPTIONS=====")
+                         debugPrint(inscription)
+                         debugPrint("=====================")
+                         }
+                         
+                         for poste in planningVM.postes
+                         {
+                         debugPrint("=====POSTES=====")
+                         debugPrint(poste)
+                         debugPrint("=====================")
+                         }
+                         
+                         for creneau in planningVM.creneaux
+                         {
+                         debugPrint("=====CRENEAUX=====")
+                         debugPrint(creneau)
+                         debugPrint("=====================")
+                         }
+                         
+                         for espace in planningVM.espaces
+                         {
+                         debugPrint("=====ESPACES=====")
+                         debugPrint(espace)
+                         debugPrint("=====================")
+                         }
+                         
+                         for nbPlace in planningVM.nombrePlaceTotal
+                         {
+                         debugPrint("=====NB PLACE=====")
+                         debugPrint("\(nbPlace.key) -> \(nbPlace.value)")
+                         debugPrint("=====================")
+                         }
+                         }
+                         else
+                         {
+                         debugPrint(">:(")
+                         }
+                         */
+                    }
                 }
                 
-                // TEST TO REMOVE
-                /*
-                if (result2)
-                {
-                    debugPrint("Planning :")
-                    for inscription in planningVM.inscriptions
-                    {
-                        debugPrint("=====INSCRIPTIONS=====")
-                        debugPrint(inscription)
-                        debugPrint("=====================")
+                Spacer()
+                HStack {
+                    Spacer()
+                    
+                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
+                        Image(systemName: "person")
                     }
                     
-                    for poste in planningVM.postes
-                    {
-                        debugPrint("=====POSTES=====")
-                        debugPrint(poste)
-                        debugPrint("=====================")
+                    Spacer()
+                    
+                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, benevoleVM: benevoleVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
+                        Image(systemName: "calendar")
                     }
                     
-                    for creneau in planningVM.creneaux
-                    {
-                        debugPrint("=====CRENEAUX=====")
-                        debugPrint(creneau)
-                        debugPrint("=====================")
+                    Spacer()
+                    
+                    
+                    NavigationLink(destination: PlanningInscriptions(selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM, benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM)){
+                        Image(systemName: "list.bullet.clipboard")
                     }
                     
-                    for espace in planningVM.espaces
-                    {
-                        debugPrint("=====ESPACES=====")
-                        debugPrint(espace)
-                        debugPrint("=====================")
-                    }
+                    Spacer()
                     
-                    for nbPlace in planningVM.nombrePlaceTotal
-                    {
-                        debugPrint("=====NB PLACE=====")
-                        debugPrint("\(nbPlace.key) -> \(nbPlace.value)")
-                        debugPrint("=====================")
+                    NavigationLink(destination: PlanningCandidatureView(candidaterVM: candidaterVM, planningCandVM: planningCandVM, benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
+                        Image(systemName: "hourglass")
                     }
+                    Spacer()
+                    
+                    /*
+                     NavigationLink(destination: FithView()){
+                     Image(systemName: "info.circle")
+                     }
+                     Spacer()
+                     */
                 }
-                else
-                {
-                 debugPrint(">:(")
-                }
-                 */
+                .padding()
+                .foregroundColor(.blue)
             }
         }
+        .navigationBarHidden(true)
     }
 }
      

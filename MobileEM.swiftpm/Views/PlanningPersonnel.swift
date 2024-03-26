@@ -4,9 +4,17 @@ struct PlanningPersonnelView: View {
     @ObservedObject var sinscrireVM : SinscrireViewModel
     //@ObservedObject var candidaterVM : CandidaterViewModel
     
+    //Variables pour la navigation vers ProfileView
     let benevoleVM: BenevoleViewModel
     
+    //Variables pour la navigation vers PlanningCandidature
+    @ObservedObject var candidaterVM : CandidaterViewModel
+    @ObservedObject var planningCandVM : PlanningCandidatureViewModel
+    
+    //Variables pour la navigation vers PlanningInscriptionsView
+    @State var selectedDay : String
     let pseudo : String
+    @ObservedObject var planningVM : PlanningViewModel
     
     var samediInscriptions: [InscriptionWithAllInfosDTO] {
         sinscrireVM.inscriptions
@@ -62,12 +70,6 @@ struct PlanningPersonnelView: View {
                                 Text(inscription.espaceDto.libelleEspace)
                                 
                                 Spacer()
-                                Button(action: {
-                                    print("Supprime")
-                                }){
-                                    Image(systemName: "trash")
-                                }
-                                .padding(10)
                             }
                             Divider()
                         }
@@ -104,31 +106,31 @@ struct PlanningPersonnelView: View {
                 HStack {
                     Spacer()
                     
-                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, pseudo: pseudo, sinscrireVM: sinscrireVM)){
+                    NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
                         Image(systemName: "person")
                     }
                     
                     Spacer()
                     
-                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, benevoleVM: benevoleVM, pseudo: pseudo)){
+                    NavigationLink(destination: PlanningPersonnelView(sinscrireVM: sinscrireVM, benevoleVM: benevoleVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
                         Image(systemName: "calendar")
                     }
                     
                     Spacer()
                     
-                    /*
-                    NavigationLink(destination: InscriptionSamediView()){
+                    
+                    NavigationLink(destination: PlanningInscriptions(selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM, benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM)){
                         Image(systemName: "list.bullet.clipboard")
                     }
                     
                     Spacer()
                     
-                    NavigationLink(destination: ProfilView()){
+                    NavigationLink(destination: PlanningCandidatureView(candidaterVM: candidaterVM, planningCandVM: planningCandVM, benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
                         Image(systemName: "hourglass")
                     }
                     Spacer()
                     
-                    
+                    /*
                      NavigationLink(destination: FithView()){
                      Image(systemName: "info.circle")
                      }
@@ -143,9 +145,10 @@ struct PlanningPersonnelView: View {
     }
 }
 
-
+/*
 struct PlanningPersonnelView_Previews: PreviewProvider {
     static var previews: some View {
         PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), benevoleVM: BenevoleViewModel(), pseudo: "blipbloup")
     }
 }
+*/
