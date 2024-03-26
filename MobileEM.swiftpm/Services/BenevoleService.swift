@@ -8,10 +8,16 @@
 import Foundation
 
 class BenevoleService {
+    
     var api : String
+    
     private func getBenevoleByPseudoUrl(pseudo : String) -> String
     {
         "users?pseudo=\(pseudo)"
+    }
+    
+    private func updateBenevoleUrl(pseudo: String) -> String {
+        "benevole/\(pseudo)"
     }
     
     init(){
@@ -64,4 +70,38 @@ class BenevoleService {
             return .failure(AuthErrors.failedUpload)
         }
     }
+    
+    public func updateBenevole(pseudo: String, updatedBenevole: BenevoleDTO) async -> Result<Void, Error> {
+            // Concatener l'host avec l'uri
+            guard let updateBenevoleURL = URL(string: "\(self.api)\(self.updateBenevoleUrl(pseudo: pseudo))") else {
+                return .failure(BenevoleErrors.failedUrl)
+            }
+            
+            // Créer une requête PUT
+            var putRequest = URLRequest(url: updateBenevoleURL)
+            putRequest.httpMethod = "Put"
+            
+            // Encoder les données du profil mis à jour en JSON et les ajouter à la requête
+            do {
+                let encoder = JSONEncoder()
+                putRequest.httpBody = try encoder.encode(updatedBenevole)
+            } catch {
+                return .failure(BenevoleErrors.failedEncode)
+            }
+            
+            // Envoyer la requête PUT
+            do {
+                let (_, response) = try await URLSession.shared.data(for: putRequest)
+                let httpResponse = response as! HTTPURLResponse // le bon type
+
+                if (httpResponse.statusCode == 200) {
+                    return .success(())
+                } else {
+                    return .failure(BenevoleErrors.failedUpdateBenevole)
+                }
+            } catch {
+                return .failure(BenevoleErrors.failedUpload)
+            }
+        }
+    
 }

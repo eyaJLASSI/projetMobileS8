@@ -13,6 +13,9 @@ enum BenevoleErrors : Error, CustomStringConvertible{
     case failedGetBenevole
     case failedDecode
     case failedThrow
+    case failedEncode
+    case failedUpdateBenevole
+    case failedUpload
     
     var description: String
     {
@@ -24,6 +27,12 @@ enum BenevoleErrors : Error, CustomStringConvertible{
             return "Failed to get benevole"
         case .failedDecode:
             return "Failed to decode benevole"
+        case .failedEncode:
+            return "Failed to encode benevole"
+        case .failedUpdateBenevole:
+            return "Failed to update benevole"
+        case .failedUpload:
+            return "Failed to upload benevole"
         case .failedThrow:
             return "Failed to get benevole, method throwed"
         }
