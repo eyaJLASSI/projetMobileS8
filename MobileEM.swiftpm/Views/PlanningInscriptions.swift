@@ -15,9 +15,7 @@ struct PlanningInscriptions: View {
     @State var pseudo      : String
     
     @ObservedObject var planningVM : PlanningViewModel
-    
-    //let creneaux = ["8h - 11h", "11h - 14h", "14h - 17h"]
-    
+        
     var creneaux: [CreneauDTO] {
         planningVM.creneaux
             .filter { $0.jourCreneau == selectedDay }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CandidatureIntent.swift
 //  
 //
 //  Created by etud on 24/03/2024.
