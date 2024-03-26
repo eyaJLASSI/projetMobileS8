@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  RegistrationState.swift
 //  
 //
 //  Created by etud on 19/03/2024.

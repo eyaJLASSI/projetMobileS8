@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  BenevoleIntent.swift
 //  
 //
 //  Created by etud on 18/03/2024.
