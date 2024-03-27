@@ -67,16 +67,38 @@ struct ProfileView: View {
                     }
                 }
                 Spacer()
-                // Remplacer le bouton par une NavigationLink
-                Button(action: {
-                    print("modification")
-                }, label: {
-                    Text("Modifier Profil")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                })
+                
+                HStack{
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    // Remplacer le bouton par une NavigationLink
+                    Button(action: {
+                        print("modification")
+                    }, label: {
+                        Text("Modifier Profil")
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    })
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    //bouton servant à se déconnecter
+                    Button(action: {
+                        print("deconnexion")
+                    }, label: {
+                        Image(systemName: "power.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.red)
+                    })
+                    Spacer()
+                }
+                    
                 Spacer()
                 HStack {
                     Spacer()
@@ -124,7 +146,8 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         let user = BenevoleViewModel()
-        return ProfileView(benevoleVM: user, pseudo: "blipbloup", sinscrireVM: SinscrireViewModel(inscriptionDTOs: []))
+        return ProfileView(benevoleVM: user, sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), selectedDay: "Samedi", pseudo: "blipbloup", planningVM: PlanningViewModel())
+        //return ProfileView(benevoleVM: user, pseudo: "blipbloup", sinscrireVM: SinscrireViewModel(inscriptionDTOs: []))
     }
 }
  */

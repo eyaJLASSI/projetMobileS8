@@ -141,8 +141,8 @@ struct PlanningInscriptions: View {
                         .padding()
                 }
                 
-                VStack(spacing: 0) {
-                    ScrollView{
+                ScrollView{
+                    VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Text("")
                                 .frame(width: 100, height: 100)
