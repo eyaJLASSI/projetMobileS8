@@ -28,7 +28,7 @@ struct PlanningInscriptions: View {
     var creneaux: [CreneauDTO] {
         planningVM.creneaux
             .filter { $0.jourCreneau == selectedDay }
-            .sorted { $0.heureDebut > $1.heureDebut }
+            .sorted { Int($0.heureDebut.replacingOccurrences(of: "h", with: "")) ?? 0 < Int($1.heureDebut.replacingOccurrences(of: "h", with: "")) ?? 0 }
     }
     
     var espaces : [EspaceDTO] {

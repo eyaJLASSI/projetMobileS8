@@ -27,13 +27,6 @@ public struct PlanningIntent
         {
         case .success(let planning):
             
-            planningViewModel.nombrePlaceTotal = planning!.nombrePlaceTotal
-            planningViewModel.postes           = planning!.postes
-            planningViewModel.espaces          = planning!.espaces
-            planningViewModel.creneaux         = planning!.creneaux
-            planningViewModel.inscriptions     = planning!.inscriptions
-            planningViewModel.candidatures     = planning!.candidatures
-            // Ajouter les inscriptions au view model
             planningViewModel.state = .loaded(
                 creneaux: planning!.creneaux,
                 espaces: planning!.espaces,
