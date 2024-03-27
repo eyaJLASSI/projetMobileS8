@@ -123,8 +123,6 @@ struct ProfileView: View {
                 
                 Spacer()
                 HStack {
-                    Spacer()
-                    
                     NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
                         Image(systemName: "person")
                     }
@@ -149,6 +147,13 @@ struct ProfileView: View {
                     }
                     Spacer()
                     
+                    NavigationLink(destination: LoginView()){
+                        Image(systemName: "power.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.red)
+                    }
                     /*
                      NavigationLink(destination: FithView()){
                      Image(systemName: "info.circle")

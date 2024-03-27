@@ -3,7 +3,7 @@
 //  
 //
 //  Created by etud on 19/03/2024.
-//
+// Les VM c'est là où on stocke les informations de la view
 
 import Foundation
 
