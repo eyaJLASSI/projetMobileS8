@@ -1,3 +1,4 @@
 # projetMobileS8
-Eya Jelassi
-Marvin Bontemps
+----
+- Eya Jelassi
+- Marvin Bontemps
