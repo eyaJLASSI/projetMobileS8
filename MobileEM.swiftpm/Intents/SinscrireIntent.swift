@@ -26,8 +26,7 @@ public struct SinscrireIntent
         switch (result)
         {
         case .success(let inscription):
-            planningViewModel.inscriptions.append(inscription)
-            planningViewModel.state = .loaded
+            planningViewModel.state = .inscrit(inscription: inscription)
             // mettre à jour le state du view model à loaded
             return true
         case .failure(let failure):
@@ -44,9 +43,8 @@ public struct SinscrireIntent
         switch (result)
         {
         case .success(_):
-            planningViewModel.inscriptions = planningViewModel.inscriptions
-                .filter { $0.id != idInscription }
-            planningViewModel.state = .loaded
+            
+            planningViewModel.state = .desinscrit(inscription: idInscription)
             // mettre à jour le state du view model à loaded
             return true
         case .failure(let failure):
@@ -64,11 +62,8 @@ public struct SinscrireIntent
         switch (result)
         {
         case .success(let candidatures):
-            for candidature in candidatures
-            {
-                planningViewModel.candidatures.append(candidature)
-            }
-            planningViewModel.state = .loaded
+            
+            planningViewModel.state = .candidater(candidature: candidatures)
             // mettre à jour le state du view model à loaded
             return true
         case .failure(let failure):
@@ -86,8 +81,7 @@ public struct SinscrireIntent
         switch (result)
         {
         case .success(_):
-            planningViewModel.candidatures = planningViewModel.candidatures.filter { $0.id != idCandidature }
-            planningViewModel.state = .loaded
+            planningViewModel.state = .decandidater(idCandidature: idCandidature)
             // mettre à jour le state du view model à loaded
             return true
         case .failure(let failure):

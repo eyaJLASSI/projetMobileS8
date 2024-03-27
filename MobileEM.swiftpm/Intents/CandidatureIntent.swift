@@ -28,7 +28,6 @@ public struct CandidatureIntent
         case .success(let candidatures):
             // Ajouter les candidatures au view model
             debugPrint("Found candidatures : \(candidatures)")
-            candidatureViewModel.candidatures = candidatures
             candidatureViewModel.state = .loaded(candidatures)
             // mettre à jour le state du view model à loaded
             return true

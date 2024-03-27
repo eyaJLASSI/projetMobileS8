@@ -28,7 +28,6 @@ public struct InscriptionPosteIntent
         case .success(let inscriptionPostes):
             // Ajouter les inscriptions au view model
             debugPrint(inscriptionPostes)
-            sinscrireViewModel.inscriptions = inscriptionPostes
             sinscrireViewModel.state = .loaded(inscriptionPostes)
             // mettre à jour le state du view model à loaded
             return true

@@ -98,18 +98,26 @@ import Foundation
  self.observers.append(obs)
  }
  
- @Published var state : PlanningState = .ready
+ @Published var state : PlanningCandidatureState = .ready
  {
- didSet
- {
- switch state
- {
- case .ready:
- debugPrint("view model : ready")
- case .loaded :
- debugPrint("view model : espace found")
- }
- }
+     didSet
+     {
+         switch state
+         {
+            case .ready:
+                debugPrint("view model : ready")
+            case .loaded(
+                 let creneaux,
+                 let espaces,
+                 let candidatures,
+                 let postes
+             ):
+                 self.creneaux = creneaux
+                 self.espaces  = espaces
+                 self.candidatures = candidatures
+                 self.postes = postes
+         }
+     }
  }
  
  }

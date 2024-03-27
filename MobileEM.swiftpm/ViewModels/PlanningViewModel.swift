@@ -128,8 +128,32 @@ class PlanningViewModel : ObservableObject, Hashable, Identifiable {
             {
                 case .ready:
                     debugPrint("view model : ready")
-                case .loaded :
-                    debugPrint("view model : espace found")
+                case .loaded(
+                    let creneaux,
+                    let espaces,
+                    let candidatures,
+                    let inscriptions,
+                    let postes,
+                    let nombrePlaceTotal
+                ):
+                    self.creneaux = creneaux
+                    self.espaces  = espaces
+                    self.candidatures = candidatures
+                    self.inscriptions = inscriptions
+                    self.postes = postes
+                    self.nombrePlaceTotal = nombrePlaceTotal
+                case .inscrit(let inscription):
+                    inscriptions.append(inscription)
+                case .desinscrit(let idInscription):
+                    inscriptions = inscriptions
+                        .filter { $0.id != idInscription }
+                case .candidater(let candidatures):
+                    for candidature in candidatures
+                    {
+                        self.candidatures.append(candidature)
+                    }
+                case .decandidater(let idCandidature):
+                    self.candidatures = self.candidatures.filter { $0.id != idCandidature }
             }
         }
     }
