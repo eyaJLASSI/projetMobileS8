@@ -76,11 +76,13 @@ struct PlanningCandidatureView: View {
                                 Text(candidature.espaceDto.libelleEspace)
                                 
                                 Spacer()
+                                /*
                                 Button(action: {
                                     print("Supprime")
                                 }){
                                     Image(systemName: "trash")
                                 }
+                                 */
                                 .padding(10)
                             }
                             Divider()
@@ -206,15 +208,12 @@ struct PlanningCandidatureView: View {
 }
      
 
-/*
 struct PlanningCandidatureViewView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningCandidatureView(candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningVM: PlanningViewModel(), pseudo: "blipbloup")
-        
+        PlanningCandidatureView(candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), benevoleVM: BenevoleViewModel(), sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), selectedDay: "Samedi", pseudo: "blipbloup", planningVM: PlanningViewModel())
+
     }
-     
 }
- */
      
      
 

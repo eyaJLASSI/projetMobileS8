@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct PlanningInscriptions: View {
     
     @State var selectedDay : String
@@ -304,12 +302,6 @@ struct PlanningInscriptions: View {
                     }
                     Spacer()
                     
-                    /*
-                     NavigationLink(destination: FithView()){
-                     Image(systemName: "info.circle")
-                     }
-                     Spacer()
-                     */
                 }
                 .padding()
                 .foregroundColor(.blue)
@@ -318,10 +310,8 @@ struct PlanningInscriptions: View {
         .navigationBarHidden(true)
     }
 }
-/*
- struct Samedi_Previews: PreviewProvider {
- static var previews: some View {
- PlanningInscriptions(selectedDay: "Samedi", pseudo: "blipbloup",planningVM: PlanningViewModel())
+struct PlanningInscriptions_Previews: PreviewProvider {
+     static var previews: some View {
+         PlanningInscriptions(selectedDay: "Samedi", pseudo: "blipbloup", planningVM: PlanningViewModel(), benevoleVM: BenevoleViewModel(), sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel())
+     }
  }
- }
- */

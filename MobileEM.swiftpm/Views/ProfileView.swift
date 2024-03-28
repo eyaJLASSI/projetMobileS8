@@ -122,6 +122,11 @@ struct ProfileView: View {
                 })
                 
                 Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                
                 HStack {
                     NavigationLink(destination: ProfileView(benevoleVM: benevoleVM, sinscrireVM: sinscrireVM, candidaterVM: candidaterVM, planningCandVM: planningCandVM, selectedDay: selectedDay, pseudo: pseudo, planningVM: planningVM)){
                         Image(systemName: "person")
@@ -154,12 +159,7 @@ struct ProfileView: View {
                             .frame(width: 50, height: 50)
                             .foregroundColor(.red)
                     }
-                    /*
-                     NavigationLink(destination: FithView()){
-                     Image(systemName: "info.circle")
-                     }
-                     Spacer()
-                     */
+                    
                 }
                 .padding()
                 .foregroundColor(.blue)
@@ -169,13 +169,11 @@ struct ProfileView: View {
     }
 }
 
-/*
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         let user = BenevoleViewModel()
-        return ProfileView(benevoleVM: user, pseudo: "blipbloup", sinscrireVM: SinscrireViewModel(inscriptionDTOs: []))
+        return ProfileView(benevoleVM: user, sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), selectedDay: "Samedi", pseudo: "blipbloup", planningVM: PlanningViewModel())
     }
 }
- */
 
 

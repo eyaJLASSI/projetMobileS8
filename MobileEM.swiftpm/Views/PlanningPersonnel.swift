@@ -50,11 +50,13 @@ struct PlanningPersonnelView: View {
                                 Text(inscription.espaceDto.libelleEspace)
                                 
                                 Spacer()
+                                /*
                                 Button(action: {
                                     print("Supprime")
                                 }){
                                     Image(systemName: "trash")
                                 }
+                                 */
                                 .padding(10)
                             }                  
                             Divider()
@@ -130,12 +132,6 @@ struct PlanningPersonnelView: View {
                     }
                     Spacer()
                     
-                    /*
-                     NavigationLink(destination: FithView()){
-                     Image(systemName: "info.circle")
-                     }
-                     Spacer()
-                     */
                 }
                 .padding()
                 .foregroundColor(.blue)
@@ -145,10 +141,9 @@ struct PlanningPersonnelView: View {
     }
 }
 
-/*
+
 struct PlanningPersonnelView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), benevoleVM: BenevoleViewModel(), pseudo: "blipbloup")
+        PlanningPersonnelView(sinscrireVM: SinscrireViewModel(inscriptionDTOs: []), benevoleVM: BenevoleViewModel(), candidaterVM: CandidaterViewModel(candidatureDTOs: []), planningCandVM: PlanningCandidatureViewModel(), selectedDay: "Samedi", pseudo: "blipbloup", planningVM: PlanningViewModel())
     }
 }
-*/
